@@ -12,11 +12,7 @@ if (!defined('ABSPATH')) {
 /**
  * Initialize the product filter functionality
  */
-<<<<<<< HEAD
 function dapfforwcpro_dapfforwcpro_filter_init()
-=======
-function dapfforwc_dapfforwc_filter_init()
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
     // Only run on frontend
     if (is_admin() && !wp_doing_ajax()) {
@@ -24,17 +20,10 @@ function dapfforwc_dapfforwc_filter_init()
     }
 
     // Filter the main query using pre_get_posts
-<<<<<<< HEAD
     add_action('pre_get_posts', 'dapfforwcpro_dapfforwcpro_filter_products_query', 10);
 
     // Intercept and handle filter requests - run this VERY early
     add_action('parse_request', 'dapfforwcpro_dapfforwcpro_parse_filter_request', 1);
-=======
-    add_action('pre_get_posts', 'dapfforwc_dapfforwc_filter_products_query', 10);
-
-    // Intercept and handle filter requests - run this VERY early
-    add_action('parse_request', 'dapfforwc_dapfforwc_parse_filter_request', 1);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 }
 
 
@@ -44,35 +33,21 @@ function dapfforwc_dapfforwc_filter_init()
  * @param WP $wp Current WordPress environment instance
  * @return WP
  */
-<<<<<<< HEAD
 function dapfforwcpro_dapfforwcpro_parse_filter_request($wp)
-=======
-function dapfforwc_dapfforwc_parse_filter_request($wp)
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
     // Start the session if not already started
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     // Parse all the filter parameters
-<<<<<<< HEAD
     $filter_params = dapfforwcpro_dapfforwcpro_get_filter_params();
-=======
-    $filter_params = dapfforwc_dapfforwc_get_filter_params();
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 
     if (isset($filter_params) && !empty($filter_params)) {
 
         // Store filter parameters in a global variable for later use
-<<<<<<< HEAD
         $GLOBALS['dapfforwcpro_filter_params'] = $filter_params;
         // Store filter parameters in a session variable for later use
         $_SESSION['dapfforwcpro_filter_params'] = $filter_params;
-=======
-        $GLOBALS['dapfforwc_filter_params'] = $filter_params;
-        // Store filter parameters in a session variable for later use
-        $_SESSION['dapfforwc_filter_params'] = $filter_params;
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     }
 
     return $wp;
@@ -83,11 +58,7 @@ function dapfforwc_dapfforwc_parse_filter_request($wp)
  * 
  * @return array
  */
-<<<<<<< HEAD
 function dapfforwcpro_dapfforwcpro_get_filter_params()
-=======
-function dapfforwc_dapfforwc_get_filter_params()
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
     global $dapfforwc_seo_permalinks_options;
     $params = array();
@@ -95,21 +66,13 @@ function dapfforwc_dapfforwc_get_filter_params()
     // Get category filter
 
     if (isset($_GET["product-category"]) && !empty($_GET["product-category"])) {
-<<<<<<< HEAD
         $params["product-category"] = dapfforwcpro_dapfforwcpro_sanitize_array($_GET["product-category"]);
-=======
-        $params["product-category"] = dapfforwc_dapfforwc_sanitize_array($_GET["product-category"]);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     }
 
     // Get tag filter
 
     if (isset($_GET['tags']) && !empty($_GET['tags'])) {
-<<<<<<< HEAD
         $params['tag'] = dapfforwcpro_dapfforwcpro_sanitize_array($_GET['tags']);
-=======
-        $params['tag'] = dapfforwc_dapfforwc_sanitize_array($_GET['tags']);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     }
 
 
@@ -119,11 +82,7 @@ function dapfforwc_dapfforwc_get_filter_params()
         foreach ($_GET['attribute'] as $attribute_name => $value) {
 
             if (!empty($value)) {
-<<<<<<< HEAD
                 $params['attributes'][$attribute_name] = dapfforwcpro_dapfforwcpro_sanitize_array($value);
-=======
-                $params['attributes'][$attribute_name] = dapfforwc_dapfforwc_sanitize_array($value);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
             }
         }
     }
@@ -131,11 +90,7 @@ function dapfforwc_dapfforwc_get_filter_params()
     // Get rating filter
 
     if (isset($_GET['rating']) && !empty($_GET['rating'])) {
-<<<<<<< HEAD
         $params['rating'] = dapfforwcpro_dapfforwcpro_sanitize_array($_GET['rating']);
-=======
-        $params['rating'] = dapfforwc_dapfforwc_sanitize_array($_GET['rating']);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     }
 
     // Get price range filter
@@ -162,11 +117,7 @@ function dapfforwc_dapfforwc_get_filter_params()
  * @param mixed $input Input to sanitize
  * @return array|string Sanitized input
  */
-<<<<<<< HEAD
 function dapfforwcpro_dapfforwcpro_sanitize_array($input)
-=======
-function dapfforwc_dapfforwc_sanitize_array($input)
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
     if (is_array($input)) {
         return array_map('sanitize_text_field', $input);
@@ -180,11 +131,7 @@ function dapfforwc_dapfforwc_sanitize_array($input)
  * @param WP_Query $query The WordPress query object
  * @return void
  */
-<<<<<<< HEAD
 function dapfforwcpro_dapfforwcpro_filter_products_query($query)
-=======
-function dapfforwc_dapfforwc_filter_products_query($query)
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
     // Only modify main query on frontend for product queries
     if (!$query->is_main_query() || is_admin()) {
@@ -197,7 +144,6 @@ function dapfforwc_dapfforwc_filter_products_query($query)
     }
 
     // Get filter parameters - ensure they're always available
-<<<<<<< HEAD
     if (!isset($GLOBALS['dapfforwcpro_filter_params']) || empty($GLOBALS['dapfforwcpro_filter_params'])) {
         $GLOBALS['dapfforwcpro_filter_params'] = dapfforwcpro_dapfforwcpro_get_filter_params();
     }
@@ -206,16 +152,6 @@ function dapfforwc_dapfforwc_filter_products_query($query)
 
     // Apply filters to query
     dapfforwcpro_apply_filters_to_query($query, $filter_params);
-=======
-    if (!isset($GLOBALS['dapfforwc_filter_params']) || empty($GLOBALS['dapfforwc_filter_params'])) {
-        $GLOBALS['dapfforwc_filter_params'] = dapfforwc_dapfforwc_get_filter_params();
-    }
-
-    $filter_params = $GLOBALS['dapfforwc_filter_params'];
-
-    // Apply filters to query
-    dapfforwc_apply_filters_to_query($query, $filter_params);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 }
 
 /**
@@ -225,11 +161,7 @@ function dapfforwc_dapfforwc_filter_products_query($query)
  * @param array $params Filter parameters
  * @return void
  */
-<<<<<<< HEAD
 function dapfforwcpro_apply_filters_to_query($query, $params)
-=======
-function dapfforwc_apply_filters_to_query($query, $params)
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
 
     // Only apply to WooCommerce product archive pages
@@ -352,11 +284,7 @@ function dapfforwc_apply_filters_to_query($query, $params)
  * Template redirect hook for handling AJAX requests
  * This allows us to return partial content for AJAX filtering
  */
-<<<<<<< HEAD
 function dapfforwcpro_template_redirect_filter()
-=======
-function dapfforwc_template_redirect_filter()
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
     // Check if this is an AJAX request
     $is_ajax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
@@ -378,28 +306,16 @@ function dapfforwc_template_redirect_filter()
         }
 
         // Ensure filter params are always available
-<<<<<<< HEAD
         if (!isset($GLOBALS['dapfforwcpro_filter_params']) || empty($GLOBALS['dapfforwcpro_filter_params'])) {
             $GLOBALS['dapfforwcpro_filter_params'] = dapfforwcpro_dapfforwcpro_get_filter_params();
-=======
-        if (!isset($GLOBALS['dapfforwc_filter_params']) || empty($GLOBALS['dapfforwc_filter_params'])) {
-            $GLOBALS['dapfforwc_filter_params'] = dapfforwc_dapfforwc_get_filter_params();
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
         }
 
 
 
-<<<<<<< HEAD
         if (!isset($GLOBALS['dapfforwcpro_filter_params']) || empty($GLOBALS['dapfforwcpro_filter_params'])) {
             $filter_params = $_SESSION['dapfforwcpro_filter_params'];
         } else {
             $filter_params = $GLOBALS['dapfforwcpro_filter_params'];
-=======
-        if (!isset($GLOBALS['dapfforwc_filter_params']) || empty($GLOBALS['dapfforwc_filter_params'])) {
-            $filter_params = $_SESSION['dapfforwc_filter_params'];
-        } else {
-            $filter_params = $GLOBALS['dapfforwc_filter_params'];
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
         }
 
         ob_start();
@@ -440,21 +356,13 @@ function dapfforwc_template_redirect_filter()
             ]);
 
             // Apply filters manually
-<<<<<<< HEAD
             dapfforwcpro_apply_filters_to_query($filter_query, $filter_params);
-=======
-            dapfforwc_apply_filters_to_query($filter_query, $filter_params);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
             $filter_query->get_posts(); // Ensure query runs
             $products_ids = $filter_query->posts;
         }
 
         // Rebuild filter form with updated filters
-<<<<<<< HEAD
         $updated_filters = dapfforwcpro_get_updated_filters($products_ids, $all_data) ?? [];
-=======
-        $updated_filters = dapfforwc_get_updated_filters($products_ids, $all_data) ?? [];
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 
 
         $product_details = array_values(dapfforwcpro_get_woocommerce_product_details()["products"] ?? []);

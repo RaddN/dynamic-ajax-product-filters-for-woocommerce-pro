@@ -4,11 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-<<<<<<< HEAD
 function dapfforwcpro_filter_form($updated_filters, $default_filter, $use_anchor, $use_filters_word, $atts, $min_price, $max_price, $min_max_prices, $search_txt='', $is_filters_in_url = true)
-=======
-function dapfforwc_filter_form($updated_filters, $default_filter, $use_anchor, $use_filters_word, $atts, $min_price, $max_price, $min_max_prices, $search_txt='', $is_filters_in_url = true)
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
 {
 
     global $dapfforwcpro_styleoptions, $post, $dapfforwc_options, $dapfforwcpro_advance_settings;
@@ -232,13 +228,8 @@ function dapfforwc_filter_form($updated_filters, $default_filter, $use_anchor, $
                 $anchorlink = $use_filters_word === 'on' ? ($is_filters_in_url ? "$value" : "filters/$value") : '?filters='.$value;
 
                 $formOutPut .= $use_anchor === 'on'   && ($sub_option !== "select" && $sub_option !== "select2" && $sub_option !== "select2_classic")
-<<<<<<< HEAD
                     ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . '</a>'
                     : dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count);
-=======
-                    ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwc_render_filter_option($sub_option, $title, $value, $checked, $dapfforwc_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . '</a>'
-                    : dapfforwc_render_filter_option($sub_option, $title, $value, $checked, $dapfforwc_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
             }
 
             if ($sub_option === "select" || $sub_option === "select2" || $sub_option === "select2_classic") {
@@ -281,13 +272,8 @@ function dapfforwc_filter_form($updated_filters, $default_filter, $use_anchor, $
                 $anchorlink = $use_filters_word === 'on' ? ($is_filters_in_url ? "$value" : "filters/$value") : '?filters='.$value;
 
                 $formOutPut .= $use_anchor === 'on'   && ($sub_option !== "select" && $sub_option !== "select2" && $sub_option !== "select2_classic")
-<<<<<<< HEAD
                     ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . '</a>'
                     : dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count);
-=======
-                    ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwc_render_filter_option($sub_option, $title, $value, $checked, $dapfforwc_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . '</a>'
-                    : dapfforwc_render_filter_option($sub_option, $title, $value, $checked, $dapfforwc_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
             }
         }
 
@@ -342,11 +328,7 @@ function dapfforwc_filter_form($updated_filters, $default_filter, $use_anchor, $
                     $count = $show_count === "yes" ? (is_object($term) ? esc_attr($term->count??0) : esc_attr($term['count']??0)):0; // Use term count directly
                     $anchorlink = $use_filters_word === 'on' ? ($is_filters_in_url ? esc_attr($slug) : "filters/".esc_attr($slug)) : '?filters='.esc_attr($slug);
                     $term_label = is_object($term) ? esc_html($term->attribute_label) : esc_attr($term['attribute_label']);
-<<<<<<< HEAD
                     $formOutPut .= $use_anchor === "on" && $sub_optionattr !== "select" && $sub_optionattr !== "select2" && $sub_optionattr !== "select2_classic" ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwcpro_render_filter_option($sub_optionattr, $term_label, esc_attr($slug), $checked, $dapfforwcpro_styleoptions, "attribute[$attribute_name]", $attribute_name, $singlevalueattrSelect, $count) . '</a>' : dapfforwcpro_render_filter_option($sub_optionattr, esc_html($name), esc_attr($slug), $checked, $dapfforwcpro_styleoptions, "attribute[$attribute_name]", $attribute_name, $singlevalueattrSelect, $count);
-=======
-                    $formOutPut .= $use_anchor === "on" && $sub_optionattr !== "select" && $sub_optionattr !== "select2" && $sub_optionattr !== "select2_classic" ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwc_render_filter_option($sub_optionattr, $term_label, esc_attr($slug), $checked, $dapfforwc_styleoptions, "attribute[$attribute_name]", $attribute_name, $singlevalueattrSelect, $count) . '</a>' : dapfforwc_render_filter_option($sub_optionattr, esc_html($name), esc_attr($slug), $checked, $dapfforwc_styleoptions, "attribute[$attribute_name]", $attribute_name, $singlevalueattrSelect, $count);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
                 }
 
                 if ($sub_optionattr === "select" || $sub_optionattr === "select2" || $sub_optionattr === "select2_classic") {
@@ -378,15 +360,9 @@ function dapfforwc_filter_form($updated_filters, $default_filter, $use_anchor, $
                 $checked = in_array($tag->slug, $selected_tags) ? ' checked' : '';
                 $value = esc_attr($tag->slug);
                 $title = esc_html($tag->name);
-<<<<<<< HEAD
                 $count = $show_count === "yes" ? $dapfforwcpro_product_count["tags"][$value] : 0;
                 $anchorlink = $use_filters_word === 'on' ? ($is_filters_in_url ? "$value" : "filters/$value") : '?filters='.$value;
                 $formOutPut .= $use_anchor === "on"  && ($sub_option !== "select" && $sub_option !== "select2" && $sub_option !== "select2_classic") ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "tags", $attribute = "tags", $singlevalueSelect, $count) . '</a>' :  dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "tags", $attribute = "tags", $singlevalueSelect, $count);
-=======
-                $count = $show_count === "yes" ? $dapfforwc_product_count["tags"][$value] : 0;
-                $anchorlink = $use_filters_word === 'on' ? ($is_filters_in_url ? "$value" : "filters/$value") : '?filters='.$value;
-                $formOutPut .= $use_anchor === "on"  && ($sub_option !== "select" && $sub_option !== "select2" && $sub_option !== "select2_classic") ? '<a href="' . esc_attr($anchorlink) . '">' . dapfforwc_render_filter_option($sub_option, $title, $value, $checked, $dapfforwc_styleoptions, "tags", $attribute = "tags", $singlevalueSelect, $count) . '</a>' :  dapfforwc_render_filter_option($sub_option, $title, $value, $checked, $dapfforwc_styleoptions, "tags", $attribute = "tags", $singlevalueSelect, $count);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
             }
         }
         if ($sub_option === "select" || $sub_option === "select2" || $sub_option === "select2_classic") {

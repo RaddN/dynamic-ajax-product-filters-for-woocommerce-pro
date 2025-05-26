@@ -26,11 +26,7 @@ function dapfforwcpro_settings_init() {
 
     register_setting(
         'dapfforwc_options_group', 
-<<<<<<< HEAD
         'dapfforwc_options','dapfforwcpro_sanitize_options'
-=======
-        'dapfforwc_options','dapfforwc_sanitize_options'
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     );
     
     add_settings_section('dapfforwcpro_section', __('Filter Settings', 'dynamic-ajax-product-filters-for-woocommerce'), null, 'dapfforwcpro-admin');
@@ -63,11 +59,7 @@ function dapfforwcpro_settings_init() {
     // form style register
     register_setting(
         'dapfforwc_style_options_group', 
-<<<<<<< HEAD
         'dapfforwc_style_options','dapfforwcpro_sanitize_options'
-=======
-        'dapfforwc_style_options','dapfforwc_sanitize_options'
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     );
 
         // Add Form Style section
@@ -89,13 +81,8 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
 ];
     update_option('dapfforwc_advance_options', $Advance_options);
     register_setting(
-<<<<<<< HEAD
         'dapfforwcpro_advance_settings', 
         'dapfforwc_advance_options','dapfforwcpro_sanitize_options'
-=======
-        'dapfforwc_advance_settings', 
-        'dapfforwc_advance_options','dapfforwc_sanitize_options'
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     );
     // Add the "Advance Settings" section
     add_settings_section(
@@ -155,13 +142,8 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
 
     update_option('dapfforwc_seo_permalinks_options', $seo_permalinks_options);
     register_setting(
-<<<<<<< HEAD
         'dapfforwcpro_seo_permalinks_settings', 
         'dapfforwc_seo_permalinks_options','dapfforwcpro_sanitize_options'
-=======
-        'dapfforwc_seo_permalinks_settings', 
-        'dapfforwc_seo_permalinks_options','dapfforwc_sanitize_options'
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     );
 
     add_settings_section(
@@ -223,11 +205,7 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
 
     add_action('admin_init', 'dapfforwcpro_settings_init');
 
-<<<<<<< HEAD
 function dapfforwcpro_sanitize_options($input) {
-=======
-function dapfforwc_sanitize_options($input) {
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     // If input is not an array, make it one
     if (!is_array($input)) {
         return array();
@@ -242,11 +220,7 @@ function dapfforwc_sanitize_options($input) {
         // Sanitize based on what type of data this is
         if (is_array($value)) {
             // Recursively sanitize nested arrays
-<<<<<<< HEAD
             $sanitized[$key] = dapfforwcpro_sanitize_options($value);
-=======
-            $sanitized[$key] = dapfforwc_sanitize_options($value);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
         } else {
             // Determine the right sanitization based on the key or value type
             switch ($key) {

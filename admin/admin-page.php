@@ -16,11 +16,7 @@ function dapfforwcpro_admin_menu() {
 }
 add_action('admin_menu', 'dapfforwcpro_admin_menu');
 
-<<<<<<< HEAD
 function dapfforwcpro_get_loading_effects() {
-=======
-function dapfforwc_get_loading_effects() {
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
     $loading_effects = [
         [
             'name' => 'Basic',
@@ -224,11 +220,7 @@ function dapfforwcpro_admin_page_content() { global $dapfforwc_options;
                         <p>Select a loading effect (or get html & css code from anywhere paste & save): </p>
                         <div class="loading-options">
                             <?php
-<<<<<<< HEAD
                             $loading_effects_json = dapfforwcpro_get_loading_effects();
-=======
-                            $loading_effects_json = dapfforwc_get_loading_effects();
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
                             $loading_effects = json_decode($loading_effects_json, true);
 
                             foreach ($loading_effects as $effect) {

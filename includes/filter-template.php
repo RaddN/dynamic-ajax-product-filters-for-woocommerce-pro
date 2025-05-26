@@ -599,12 +599,7 @@ function dapfforwcpro_product_filter_shortcode($atts)
             wp_nonce_field('gm-product-filter-action', 'gm-product-filter-nonce');
 
             $default_filter = isset($dapfforwc_seo_permalinks_options["use_attribute_type_in_permalinks"]) && $dapfforwc_seo_permalinks_options["use_attribute_type_in_permalinks"] === "on" ? $all_data_objects : $default_filter;
-<<<<<<< HEAD
             echo dapfforwcpro_filter_form($updated_filters, $all_data_objects, $use_anchor, $use_filters_word, $atts, $min_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["min_price"] : (intval($min_max_prices['min'])) ?? 0, $max_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["max_price"] : (intval($min_max_prices['max']) ?? 100000000000), $min_max_prices,'',false);
-=======
-            // echo json_encode($dapfforwc_styleoptions["price"]["auto_price"]);
-            echo dapfforwc_filter_form($updated_filters, $all_data_objects, $use_anchor, $use_filters_word, $atts, $min_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["min_price"] : (intval($min_max_prices['min'])) ?? 0, $max_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["max_price"] : (intval($min_max_prices['max']) ?? 100000000000), $min_max_prices,'',false);
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
             echo $formOutPut;
             echo '</form>';
             if ($atts['mobile_responsive'] === 'style_3' || $atts['mobile_responsive'] === 'style_4') { ?>
