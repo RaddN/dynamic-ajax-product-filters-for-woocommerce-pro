@@ -125,7 +125,7 @@ $dapfforwcpro_sub_options = [
         'button_check' => 'Button Checkbox',
         'radio_check' => 'Radio Check',
         'radio' => 'Radio',
-        'square_check' => 'Square Check',
+        // 'square_check' => 'Square Check',
         'square' => 'Square',
         'checkbox_hide' => 'Checkbox Hide',
     ],
@@ -351,18 +351,14 @@ function dapfforwcpropro_admin_scripts($hook)
 
                  if (selectedAttribute === "price") {
                     toggleDisplay(".primary_options label", "none");
-                    toggleDisplay(".hierarchical", "none");
                     toggleDisplay(".primary_options label.price", "block");
-                    toggleDisplay(".primary_options label.rating", "none");
                     toggleDisplay(".min-max-price-set", "block");
-                    toggleDisplay(".setting-item.single-selection", "none");
-                    toggleDisplay(".setting-item.show-product-count", "none");
+                    toggleDisplay(".setting-item.single-selection", "block");
+                    toggleDisplay(".setting-item.show-product-count", "block");
                 }
                 else if (selectedAttribute === "rating") {
                     toggleDisplay(".min-max-price-set", "none");
-                    toggleDisplay(".hierarchical", "none");
                     toggleDisplay(".primary_options label", "none");
-                    toggleDisplay(".primary_options label.price", "none");
                     toggleDisplay(".primary_options label.rating", "block");
                     toggleDisplay(".setting-item.single-selection", "none");
                     toggleDisplay(".setting-item.show-product-count", "none");
@@ -372,8 +368,18 @@ function dapfforwcpropro_admin_scripts($hook)
                     toggleDisplay(".primary_options label", "block");
                     toggleDisplay(".primary_options label.price", "none");
                     toggleDisplay(".primary_options label.rating", "none");
-                    toggleDisplay(".setting-item.single-selection", "block");
                     toggleDisplay(".setting-item.show-product-count", "block");
+                    toggleDisplay(".primary_options label.color", "none");
+                    toggleDisplay(".primary_options label.image", "none");
+                }else if(selectedAttribute === "tag"){
+                    toggleDisplay(".hierarchical", "none");
+                    toggleDisplay(".min-max-price-set", "none");
+                    toggleDisplay(".primary_options label", "block");
+                    toggleDisplay(".primary_options label.price", "none");
+                    toggleDisplay(".primary_options label.rating", "none");
+                    toggleDisplay(".setting-item.show-product-count", "block");
+                    toggleDisplay(".primary_options label.color", "none");
+                    toggleDisplay(".primary_options label.image", "none");
                 }
                 else {
                     toggleDisplay(".min-max-price-set", "none");
@@ -391,7 +397,13 @@ function dapfforwcpropro_admin_scripts($hook)
 
     if(dropdown){const firstAttribute = dropdown.value;
 
-    document.querySelector(`#options-${firstAttribute}`).style.display = "block";}
+   if(dropdown){
+        const firstAttribute = dropdown.value;
+        const firstOptions = document.querySelector(`#options-${firstAttribute}`);
+        if (firstOptions) {
+            firstOptions.style.display = "block";
+        }
+    }
 
     function toggleDisplay(selector, display) {
         document.querySelectorAll(selector).forEach(el => {
@@ -414,36 +426,65 @@ function dapfforwcpropro_admin_scripts($hook)
     }
 
     if (selectedAttribute === "price") {
-        toggleDisplay(".primary_options label", "none");
-        toggleDisplay(".primary_options label.price", "block");
-        toggleDisplay(".min-max-price-set", "block");
-        toggleDisplay(".setting-item.single-selection", "block");
-        toggleDisplay(".setting-item.show-product-count", "block");
-    }
-    else if (selectedAttribute === "rating") {
-        toggleDisplay(".min-max-price-set", "none");
-        toggleDisplay(".primary_options label", "none");
-        toggleDisplay(".primary_options label.rating", "block");
-        toggleDisplay(".setting-item.single-selection", "none");
-        toggleDisplay(".setting-item.show-product-count", "none");
-    } else if(selectedAttribute === "product-category"){
-        toggleDisplay(".hierarchical", "block");
-        toggleDisplay(".min-max-price-set", "none");
-        toggleDisplay(".primary_options label", "block");
-        toggleDisplay(".primary_options label.price", "none");
-        toggleDisplay(".primary_options label.rating", "none");
-        toggleDisplay(".setting-item.single-selection", "block");
-        toggleDisplay(".setting-item.show-product-count", "block");
-    }
-    else {
-        toggleDisplay(".min-max-price-set", "none");
-        toggleDisplay(".hierarchical", "none");
-        toggleDisplay(".primary_options label", "block");
-        toggleDisplay(".primary_options label.price", "none");
-        toggleDisplay(".primary_options label.rating", "none");
-        toggleDisplay(".setting-item.single-selection", "block");
-        toggleDisplay(".setting-item.show-product-count", "block");
-    }
+    toggleDisplay(".primary_options label", "none");
+    toggleDisplay(".primary_options label.price", "block");
+    toggleDisplay(".min-max-price-set", "block");
+    toggleDisplay(".setting-item.single-selection", "block");
+    toggleDisplay(".setting-item.show-product-count", "block");
+}
+else if (selectedAttribute === "rating") {
+    toggleDisplay(".min-max-price-set", "none");
+    toggleDisplay(".primary_options label", "none");
+    toggleDisplay(".primary_options label.rating", "block");
+    toggleDisplay(".setting-item.single-selection", "none");
+    toggleDisplay(".setting-item.show-product-count", "none");
+} else if(selectedAttribute === "product-category"){
+    toggleDisplay(".hierarchical", "block");
+    toggleDisplay(".min-max-price-set", "none");
+    toggleDisplay(".primary_options label", "block");
+    toggleDisplay(".primary_options label.price", "none");
+    toggleDisplay(".primary_options label.rating", "none");
+    toggleDisplay(".setting-item.show-product-count", "block");
+    toggleDisplay(".primary_options label.color", "none");
+    toggleDisplay(".primary_options label.image", "none");
+}else if(selectedAttribute === "tag"){
+    toggleDisplay(".hierarchical", "none");
+    toggleDisplay(".min-max-price-set", "none");
+    toggleDisplay(".primary_options label", "block");
+    toggleDisplay(".primary_options label.price", "none");
+    toggleDisplay(".primary_options label.rating", "none");
+    toggleDisplay(".setting-item.show-product-count", "block");
+    toggleDisplay(".primary_options label.color", "none");
+    toggleDisplay(".primary_options label.image", "none");
+}
+else {
+    toggleDisplay(".min-max-price-set", "none");
+    toggleDisplay(".hierarchical", "none");
+    toggleDisplay(".primary_options label", "block");
+    toggleDisplay(".primary_options label.price", "none");
+    toggleDisplay(".primary_options label.rating", "none");
+    toggleDisplay(".setting-item.single-selection", "block");
+    toggleDisplay(".setting-item.show-product-count", "block");
+}
+});
+
+    document.querySelectorAll(".style-options .primary_options label").forEach(function (label) {
+        label.addEventListener("click", function () {
+            const checkIcon = this.querySelector(".active");
+            if (checkIcon) {
+                checkIcon.style.display = "inline"; // Show check icon
+            }
+            this.classList.add("active");
+            document.querySelectorAll(".style-options .primary_options label").forEach(otherLabel => {
+                if (otherLabel !== this) {
+                    otherLabel.classList.remove("active");
+                    const otherCheckIcon = otherLabel.querySelector(".active");
+                    if (otherCheckIcon) {
+                        otherCheckIcon.style.display = "none"; // Hide check icon
+                    }
+                }
+            });
+        });
 });
 
     document.querySelectorAll(`.style-options .primary_options input[type="radio"][name^="dapfforwc_style_options"]`).forEach(function (radio) {
