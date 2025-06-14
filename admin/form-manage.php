@@ -26,7 +26,7 @@ function dapfforwcpro_render_checkbox($key, $settings = "dapfforwc_options")
 
         ?>
         <p>
-            <h4 for="seo_meta_tag"><?php esc_html_e('Choose Meta Tag:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></h4>
+            <h4 for="seo_meta_tag"><?php esc_html_e('Choose Meta Tag:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></h4>
             <select name="dapfforwc_seo_permalinks_options[seo_meta_tag]" id="seo_meta_tag">
                 <?php
                 $meta_tag_options = [
@@ -40,7 +40,7 @@ function dapfforwcpro_render_checkbox($key, $settings = "dapfforwc_options")
                 }
                 ?>
             </select>
-            <p class="description"><?php esc_html_e('Select the meta tag to be added in the head section of the page.', 'dynamic-ajax-product-filters-for-woocommerce'); ?></p>
+            <p class="description"><?php esc_html_e('Select the meta tag to be added in the head section of the page.', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></p>
         </p>
         <?php
     }
@@ -121,7 +121,7 @@ function dapfforwcpro_custom_template_code_render()
                                                                                                                                                             echo esc_textarea($dapfforwc_options['custom_template_code']);
                                                                                                                                                         } ?></textarea>
     <div id="code-editor"></div>
-    <p class="description"><?php esc_html_e('Enter your custom template code here.', 'dynamic-ajax-product-filters-for-woocommerce'); ?></p>
+    <p class="description"><?php esc_html_e('Enter your custom template code here.', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></p>
     </div>
 
 
@@ -133,12 +133,12 @@ function dapfforwcpro_use_url_filter_render()
     global $dapfforwc_options;
 ?>
     <fieldset>
-        <legend><?php esc_html_e('Select URL Filter Type', 'dynamic-ajax-product-filters-for-woocommerce'); ?></legend>
+        <legend><?php esc_html_e('Select URL Filter Type', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></legend>
         <?php
         $types = [
-            'query_string' => __('With Query String (e.g., ?filters)', 'dynamic-ajax-product-filters-for-woocommerce'),
-            'permalinks' => __('With Permalinks (e.g., brand/size/color)', 'dynamic-ajax-product-filters-for-woocommerce'),
-            'ajax' => __('With Ajax', 'dynamic-ajax-product-filters-for-woocommerce'),
+            'query_string' => __('With Query String (e.g., ?filters)', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+            dapfforwcpro_premium_feature()?'permalinks':'pro_only' => __('With Permalinks (e.g., brand/size/color)', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+            'ajax' => __('With Ajax', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         ];
         foreach ($types as $value => $label) {
             // Check if the current value is "pro_only"

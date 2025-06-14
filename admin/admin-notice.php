@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 // check duplicate slugs
 
-function dapfforwcpropro_check_woocommerce_duplicate_slugs() {
+function dapfforwcpro_check_woocommerce_duplicate_slugs() {
     global $dapfforwc_seo_permalinks_options;
     // Only run in the admin area
     if (is_admin()) {
@@ -60,14 +60,14 @@ function dapfforwcpropro_check_woocommerce_duplicate_slugs() {
             add_action('admin_notices', function() use ($duplicate_slugs) {
                 ?>
                 <div class="notice notice-error is-dismissible" id="woocommerce-slug-check-notice">
-                    <p><?php esc_html_e('The following slugs are duplicated across categories, tags, or attributes:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></p>
+                    <p><?php esc_html_e('The following slugs are duplicated across categories, tags, or attributes:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></p>
                     <ul>
                         <?php foreach (array_keys($duplicate_slugs) as $dapfforwcpro_slug) : ?>
                             <li><?php echo esc_html($dapfforwcpro_slug); ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <p><?php esc_html_e('Please ensure each slug is unique to avoid filtering issues.', 'dynamic-ajax-product-filters-for-woocommerce'); ?></p>
-                    <button type="button" id="woocommerce-slug-check-remind-later" class="button"><?php esc_html_e('Remind Me Later', 'dynamic-ajax-product-filters-for-woocommerce'); ?></button>
+                    <p><?php esc_html_e('Please ensure each slug is unique to avoid filtering issues.', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></p>
+                    <button type="button" id="woocommerce-slug-check-remind-later" class="button"><?php esc_html_e('Remind Me Later', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></button>
                 </div>
                 <script type="text/javascript">
                     jQuery(document).ready(function($) {
@@ -85,7 +85,7 @@ function dapfforwcpropro_check_woocommerce_duplicate_slugs() {
         }
     }
 }
-add_action('admin_init', 'dapfforwcpropro_check_woocommerce_duplicate_slugs');
+add_action('admin_init', 'dapfforwcpro_check_woocommerce_duplicate_slugs');
 
 // Handle AJAX dismiss action
 function dapfforwcpro_dismiss_slug_check_notice() {

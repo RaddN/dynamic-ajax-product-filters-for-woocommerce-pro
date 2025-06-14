@@ -32,7 +32,7 @@ function dapfforwcpro_add_review_popup()
                 <div id="review-popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;">
                     <h2>We Value Your Feedback!</h2>
                     <p>If you enjoy using <b>Dynamic AJAX Product Filters for WooCommerce Pro</b>, please take a moment to leave us a review.</p>
-                    <a href="https://wordpress.org/support/plugin/dynamic-ajax-product-filters-for-woocommerce/reviews/" target="_blank" style="display:inline-block; padding:10px 15px; background:#0073aa; color:#fff; text-decoration:none; border-radius:5px;">Leave a Review</a>
+                    <a href="https://wordpress.org/support/plugin/dynamic-ajax-product-filters-for-woocommerce-pro/reviews/" target="_blank" style="display:inline-block; padding:10px 15px; background:#0073aa; color:#fff; text-decoration:none; border-radius:5px;">Leave a Review</a>
                     <button id="close-popup" style="margin-top:10px; background:#f00; color:#fff; border:none; padding:10px; cursor:pointer;">Remind Me Later</button>
                     <button id="already-done" style="margin-top:10px; background:#ccc; color:#000; border:none; padding:10px; cursor:pointer;">Already Done</button>
                 </div>
@@ -107,7 +107,7 @@ function dapfforwcpro_show_admin_notice()
     ?>
     <div class="notice notice-info is-dismissible" id="admin-review-notice">
         <p>If you enjoy using <b>Dynamic AJAX Product Filters for WooCommerce Pro</b>, please take a moment to leave us a review.</p>
-        <p><a href="https://wordpress.org/support/plugin/dynamic-ajax-product-filters-for-woocommerce/reviews/" target="_blank" class="button-primary">Leave a Review</a>
+        <p><a href="https://wordpress.org/support/plugin/dynamic-ajax-product-filters-for-woocommerce-pro/reviews/" target="_blank" class="button-primary">Leave a Review</a>
             <button id="close-notice" class="button-secondary">Remind Me Later</button>
             <button id="already-done-notice" class="button-secondary">Already Done</button>
         </p>

@@ -28,7 +28,7 @@ function dapfforwcpro_product_filter_shortcode($atts)
     $request = $wp->request;
     $request_parts = explode('/', $request);
     $request_parts = is_archive() ? [end($request_parts)] : $request_parts;
-    $dapfforwcpro_slug = is_archive() ? end($request_parts) : (isset($post) ? dapfforwcpropro_get_full_slug($post->ID) : "");
+    $dapfforwcpro_slug = is_archive() ? end($request_parts) : (isset($post) ? dapfforwcpro_get_full_slug($post->ID) : "");
     // Get Categories, Tags, attributes using the existing function
     $all_data = dapfforwcpro_get_woocommerce_attributes_with_terms();
     $all_cata = $all_data['categories'] ?? [];
@@ -359,13 +359,14 @@ function dapfforwcpro_product_filter_shortcode($atts)
     ob_start(); // Start output buffering
 ?>
     <style>
-         #product-filter .progress-percentage:before {
+        #product-filter .progress-percentage:before {
             content: "";
-            content: <?php echo !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? '"'.$dapfforwc_styleoptions["price"]["min_price"].'"' : '"'.($min_max_prices['min'] ?? 0).'"'; ?>;
+            content: <?php echo !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? '"' . $dapfforwcpro_styleoptions["price"]["min_price"] . '"' : '"' . ($min_max_prices['min'] ?? 0) . '"'; ?>;
         }
+
         #product-filter .progress-percentage:after {
             content: "";
-            content: <?php echo !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? '"'.$dapfforwc_styleoptions["price"]["max_price"].'"' : '"'.($min_max_prices['max'] ?? 100000000000).'"'; ?>;
+            content: <?php echo !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? '"' . $dapfforwcpro_styleoptions["price"]["max_price"] . '"' : '"' . ($min_max_prices['max'] ?? 100000000000) . '"'; ?>;
         }
 
         <?php if ($atts['mobile_responsive'] === 'style_1') { ?>
@@ -601,7 +602,7 @@ function dapfforwcpro_product_filter_shortcode($atts)
             $default_filter = isset($dapfforwc_seo_permalinks_options["use_attribute_type_in_permalinks"]) && $dapfforwc_seo_permalinks_options["use_attribute_type_in_permalinks"] === "on" ? $all_data_objects : $default_filter;
             $min_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["min_price"] : (floor(floatval($min_max_prices['min']))) ?? 0;
             $max_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["max_price"] : (ceil(floatval($min_max_prices['max'])) ?? 100000000000);
-            echo dapfforwcpro_filter_form($updated_filters, $all_data_objects, $use_anchor, $use_filters_word, $atts, $min_price, $max_price, $min_max_prices,'',false);
+            echo dapfforwcpro_filter_form($updated_filters, $all_data_objects, $use_anchor, $use_filters_word, $atts, $min_price, $max_price, $min_max_prices, '', false);
             echo $formOutPut;
             echo '</form>';
             if ($atts['mobile_responsive'] === 'style_3' || $atts['mobile_responsive'] === 'style_4') { ?>
@@ -774,17 +775,20 @@ function dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked
             $output .= '<option class="filter-option" value="' . $value . '"' . ($checked ? 'selected' : '') . '> ' . $title . ($count != 0 ? ' (' . $count . ')' : '') . '</option>';
             break;
         case 'input-price-range':
-            $default_min_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["min_price"] : $min_max_prices['min'] ?? $min_price;
-            $default_max_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["max_price"] : ((int)($min_max_prices['max'] ?? $max_price));
-            $output .= '<div class="range-input"><label for="min-price">Min Price:</label>
+            if (!dapfforwcpro_premium_feature()) {
+            } else {
+                $default_min_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["min_price"] : $min_max_prices['min'] ?? $min_price;
+                $default_max_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["max_price"] : ((int)($min_max_prices['max'] ?? $max_price));
+                $output .= '<div class="range-input"><label for="min-price">Min Price:</label>
         <input type="number" id="min-price" name="min_price" min="' . $default_min_price . '" step="1" placeholder="Min" value="' . $min_price . '" style="position: relative; height: max-content; top: unset; pointer-events: all;">
         
         <label for="max-price">Max Price:</label>
-        <input type="number" id="max-price" name="max_price" min="' . $default_min_price . '" step="1" placeholder="Max" value="' . $max_price+1 . '" style="position: relative; height: max-content; top: unset; pointer-events: all;"></div>';
-            break;
+        <input type="number" id="max-price" name="max_price" min="' . $default_min_price . '" step="1" placeholder="Max" value="' . $max_price + 1 . '" style="position: relative; height: max-content; top: unset; pointer-events: all;"></div>';
+                break;
+            }
         case 'slider':
-            $default_min_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["min_price"] : $min_max_prices['min'] ?? $min_price;
-            $default_max_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["max_price"] :  ((int)($min_max_prices['max'] ?? $max_price));
+            $default_min_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["min_price"] : $min_max_prices['min'] ?? $min_price;
+            $default_max_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["max_price"] : ((int)($min_max_prices['max'] ?? $max_price));
             $output .= '<div class="price-input">
         <div class="field">
           <span>Min</span>
@@ -805,8 +809,8 @@ function dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked
       </div>';
             break;
         case 'price':
-            $default_min_price = !isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["min_price"] : $min_max_prices['min'] ?? $min_price;
-            $default_max_price =!isset($dapfforwc_styleoptions["price"]["auto_price"]) ? $dapfforwc_styleoptions["price"]["max_price"] : ($min_max_prices['max'] ?? $max_price);
+            $default_min_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["min_price"] : $min_max_prices['min'] ?? $min_price;
+            $default_max_price = !isset($dapfforwcpro_styleoptions["price"]["auto_price"]) ? $dapfforwcpro_styleoptions["price"]["max_price"] : ($min_max_prices['max'] ?? $max_price);
             $output .= '<div class="price-input" style="visibility: hidden; margin: 0;">
         <div class="field">
             <input type="number" id="min-price" name="min_price" class="input-min" min="' . $default_min_price . '" value="' . $min_price . '">
@@ -832,6 +836,17 @@ function dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked
         <label><input type="checkbox" name="rating[]" value="2" ' . (in_array("2", $checked) ? ' checked' : '') . '> 2 Stars & Up</label>
         <label><input type="checkbox" name="rating[]" value="1" ' . (in_array("1", $checked) ? ' checked' : '') . '> 1 Star & Up</label>';
             break;
+        case 'dynamic-rating':
+            if (!dapfforwcpro_premium_feature()) {
+            } else {
+                $star = '<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 576 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path></svg>';
+                for ($i = 5; $i >= 1; $i--) {
+                    $output .= '<input type="radio" id="star' . $i . '" name="rating[]" value="' . esc_attr($i) . '" ' . (in_array($i, $checked) ? ' checked' : '') . ' />';
+                    $output .= '<label class="stars" for="star' . $i . '" title="' . esc_html($i) . ' stars" style="display:flex;flex-direction: row;">' . $star . '</label>';
+                }
+
+                break;
+            }
         case 'rating':
             for ($i = 5; $i >= 1; $i--) {
                 $star = '<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 576 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path></svg>';
@@ -844,14 +859,6 @@ function dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked
                 $output .= '</span>';
                 $output .= '</label>';
             }
-            break;
-        case 'dynamic-rating':
-                $star = '<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 576 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path></svg>';
-            for ($i = 5; $i >= 1; $i--) {
-                $output .= '<input type="radio" id="star' . $i . '" name="rating[]" value="' . esc_attr($i) . '" ' . (in_array($i, $checked) ? ' checked' : '') . ' />';
-                $output .= '<label class="stars" for="star' . $i . '" title="' . esc_html($i) . ' stars" style="display:flex;flex-direction: row;">'.$star.'</label>';
-            }
-
             break;
         default:
             $output .= '<label><input type="' . ($singlevalueSelect === "yes" ? 'radio' : 'checkbox') . '" class="filter-checkbox" name="' . $name . '[]" value="' . $value . '"' . $checked . '> ' . $title . ($count != 0 ? ' (' . $count . ')' : '') . '</label>';
@@ -923,13 +930,13 @@ function dapfforwcpro_render_category_hierarchy(
             . (!empty($child_categories) && $hierarchical === 'enable_hide_child' ? '<span class="show-sub-cata">+</span>' : '')
             . '</div>'
             : ($sub_option !== 'select' && !str_contains($sub_option, 'select2') ? '<div style="display:flex;align-items: center;text-decoration: none;">'
-            . dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . (!empty($child_categories) && $hierarchical === 'enable_hide_child' ? '<span class="show-sub-cata" style="cursor:pointer;">+</span>' : '')
-            . '</div>':dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . (!empty($child_categories) && $hierarchical === 'enable_hide_child' ? '<span class="show-sub-cata" style="cursor:pointer;">+</span>' : ''));
+                . dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . (!empty($child_categories) && $hierarchical === 'enable_hide_child' ? '<span class="show-sub-cata" style="cursor:pointer;">+</span>' : '')
+                . '</div>' : dapfforwcpro_render_filter_option($sub_option, $title, $value, $checked, $dapfforwcpro_styleoptions, "product-category", "product-category", $singlevaluecataSelect, $count) . (!empty($child_categories) && $hierarchical === 'enable_hide_child' ? '<span class="show-sub-cata" style="cursor:pointer;">+</span>' : ''));
 
         // Render child categories
         if (!empty($child_categories)) {
             $categoryHierarchyOutput .= $sub_option !== 'select' && !str_contains($sub_option, 'select2') ? '<div class="child-categories" style="display:' . ($hierarchical === 'enable_hide_child' ? 'none;' : 'block;') . '">' : '';
-            $categoryHierarchyOutput .= dapfforwc_render_category_hierarchy($child_categories, $selected_categories, $sub_option, $dapfforwc_styleoptions, $singlevaluecataSelect, $show_count, $use_anchor, $use_filters_word, $hierarchical, $child_category);
+            $categoryHierarchyOutput .= dapfforwcpro_render_category_hierarchy($child_categories, $selected_categories, $sub_option, $dapfforwcpro_styleoptions, $singlevaluecataSelect, $show_count, $use_anchor, $use_filters_word, $hierarchical, $child_category);
             $categoryHierarchyOutput .= $sub_option !== 'select' && !str_contains($sub_option, 'select2') ? '</div>' : '';
         }
     }

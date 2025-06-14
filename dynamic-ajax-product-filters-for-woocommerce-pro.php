@@ -4,12 +4,12 @@
  * Plugin Name: Dynamic AJAX Product Filters for WooCommerce Pro
  * Plugin URI:  https://plugincy.com/
  * Description: A WooCommerce plugin to filter products by attributes, categories, and tags using AJAX for seamless user experience.
- * Version:     1.1.6.20
+ * Version:     1.1.7
  * Author:      Plugincy
  * Author URI:  https://plugincy.com
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: dynamic-ajax-product-filters-for-woocommerce
+ * Text Domain: dynamic-ajax-product-filters-for-woocommerce-pro
  * Domain Path: /languages
  */
 
@@ -17,23 +17,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+define('DAPFFORWCPRO_VERSION', '1.1.7');
+
 // Check if the free version is installed and deactivate it if active
 add_action('plugins_loaded', function () {
     if (is_plugin_active('dynamic-ajax-product-filters-for-woocommerce/dynamic-ajax-product-filters-for-woocommerce.php')) {
         deactivate_plugins('dynamic-ajax-product-filters-for-woocommerce/dynamic-ajax-product-filters-for-woocommerce.php');
         add_action('admin_notices', function () {
             echo '<div class="notice notice-warning is-dismissible"><p>';
-            esc_html_e('Dynamic AJAX Product Filters for WooCommerce (free version) has been deactivated. Please use only the Pro version.', 'dynamic-ajax-product-filters-for-woocommerce');
+            esc_html_e('Dynamic AJAX Product Filters for WooCommerce (free version) has been deactivated. Please use only the Pro version.', 'dynamic-ajax-product-filters-for-woocommerce-pro');
             echo '</p></div>';
         });
     }
 }, 1);
 
 // Load text domain for translations
-add_action('plugins_loaded', 'dapfforwcpropro_load_textdomain');
-function dapfforwcpropro_load_textdomain()
+add_action('plugins_loaded', 'dapfforwcpro_load_textdomain');
+function dapfforwcpro_load_textdomain()
 {
-    load_plugin_textdomain('dynamic-ajax-product-filters-for-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('dynamic-ajax-product-filters-for-woocommerce-pro', false, dirname(plugin_basename(__FILE__)) . '/languages');
 }
 
 // Global Variables
@@ -159,12 +161,12 @@ $dapfforwcpro_sub_options = [
 
 
 // Check if WooCommerce is active
-add_action('plugins_loaded', 'dapfforwcpropro_check_woocommerce');
+add_action('plugins_loaded', 'dapfforwcpro_check_woocommerce');
 
-function dapfforwcpropro_check_woocommerce()
+function dapfforwcpro_check_woocommerce()
 {
     if (!class_exists('WooCommerce')) {
-        add_action('admin_notices', 'dapfforwcpropro_missing_woocommerce_notice');
+        add_action('admin_notices', 'dapfforwcpro_missing_woocommerce_notice');
     } else {
         if (is_admin()) {
             require_once plugin_dir_path(__FILE__) . 'admin/admin-notice.php';
@@ -172,9 +174,10 @@ function dapfforwcpropro_check_woocommerce()
             require_once plugin_dir_path(__FILE__) . 'admin/admin-page.php';
         }
         require_once plugin_dir_path(__FILE__) . 'includes/filter-template.php';
+        require_once plugin_dir_path(__FILE__) . 'admin/license-page.php';
 
-        add_action('wp_enqueue_scripts', 'dapfforwcpropro_enqueue_scripts');
-        add_action('admin_enqueue_scripts', 'dapfforwcpropro_admin_scripts');
+        add_action('wp_enqueue_scripts', 'dapfforwcpro_enqueue_scripts');
+        add_action('admin_enqueue_scripts', 'dapfforwcpro_admin_scripts');
         require_once plugin_dir_path(__FILE__) . 'includes/class-filter-functions.php';
 
         // add_action('wp_ajax_dapfforwcpro_filter_products', 'dapfforwcpro_filter_products');
@@ -182,28 +185,28 @@ function dapfforwcpropro_check_woocommerce()
 
         register_setting('dapfforwc_options_group', 'dapfforwcpro_filters', 'sanitize_text_field');
 
-        add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'dapfforwcpropro_add_settings_link');
+        add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'dapfforwcpro_add_settings_link');
         require_once plugin_dir_path(__FILE__) . 'includes/common-functions.php';
 
         // filter error detector
-        add_action('admin_bar_menu', 'dapfforwcpropro_add_debug_menu', 100);
+        add_action('admin_bar_menu', 'dapfforwcpro_add_debug_menu', 100);
         add_action('init', 'dapfforwcpro_dapfforwcpro_filter_init');
         add_action('template_redirect', 'dapfforwcpro_template_redirect_filter');
 
         // Hook into wp_head with a high priority to ensure our tags are output correctly
-        add_action('wp_head', 'dapfforwcpropro_set_seo_meta_tags', 0);
+        add_action('wp_head', 'dapfforwcpro_set_seo_meta_tags', 0);
 
         require_once(plugin_dir_path(__FILE__) . 'includes/permalinks-setup.php');
     }
 }
 
-function dapfforwcpropro_missing_woocommerce_notice()
+function dapfforwcpro_missing_woocommerce_notice()
 {
-    echo '<div class="notice notice-error"><p><strong>' . esc_html__('Filter Plugin', 'dynamic-ajax-product-filters-for-woocommerce') . '</strong> ' . esc_html__('requires WooCommerce to be installed and activated.', 'dynamic-ajax-product-filters-for-woocommerce') . '</p></div>';
+    echo '<div class="notice notice-error"><p><strong>' . esc_html__('Filter Plugin', 'dynamic-ajax-product-filters-for-woocommerce-pro') . '</strong> ' . esc_html__('requires WooCommerce to be installed and activated.', 'dynamic-ajax-product-filters-for-woocommerce-pro') . '</p></div>';
 }
 
 // Enqueue scripts and styles
-function dapfforwcpropro_enqueue_scripts()
+function dapfforwcpro_enqueue_scripts()
 {
     global $dapfforwcpro_use_url_filter, $dapfforwc_options, $dapfforwc_seo_permalinks_options, $dapfforwcpro_slug, $dapfforwcpro_styleoptions, $dapfforwcpro_advance_settings, $dapfforwcpro_front_page_slug;
 
@@ -211,7 +214,7 @@ function dapfforwcpropro_enqueue_scripts()
     $script_path = 'assets/js/filter.min.js';
 
     wp_enqueue_script('jquery');
-    wp_enqueue_script($script_handle, plugin_dir_url(__FILE__) . $script_path, ['jquery'], '1.1.6.20', true);
+    wp_enqueue_script($script_handle, plugin_dir_url(__FILE__) . $script_path, ['jquery'], '1.1.7', true);
     wp_script_add_data($script_handle, 'async', true); // Load script asynchronously
     wp_localize_script($script_handle, 'dapfforwcpro_data', compact('dapfforwc_options', 'dapfforwc_seo_permalinks_options', 'dapfforwcpro_slug', 'dapfforwcpro_styleoptions', 'dapfforwcpro_advance_settings', 'dapfforwcpro_front_page_slug'));
     wp_localize_script($script_handle, 'dapfforwcpro_ajax', [
@@ -222,9 +225,9 @@ function dapfforwcpropro_enqueue_scripts()
         'isHomePage' => is_front_page()
     ]);
 
-    wp_enqueue_style('filter-style', plugin_dir_url(__FILE__) . 'assets/css/style.min.css', [], '1.1.6.20');
-    wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', [], '1.1.6.20');
-    wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', ['jquery'], '1.1.6.20', true);
+    wp_enqueue_style('filter-style', plugin_dir_url(__FILE__) . 'assets/css/style.min.css', [], '1.1.7');
+    wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', [], '1.1.7');
+    wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', ['jquery'], '1.1.7', true);
     $css = '';
     // Generate inline css for sidebartop in mobile
     if (isset($dapfforwcpro_advance_settings["sidebar_top"]) && $dapfforwcpro_advance_settings["sidebar_top"] === "on") {
@@ -314,24 +317,24 @@ function dapfforwcpropro_enqueue_scripts()
     ');
 }
 
-function dapfforwcpropro_admin_scripts($hook)
+function dapfforwcpro_admin_scripts($hook)
 {
     if ($hook !== 'toplevel_page_dapfforwcpro-admin') {
         return; // Load only on the plugin's admin page
     }
     global $dapfforwcpro_sub_options;
-    wp_enqueue_style('dapfforwcpro-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.min.css', [], '1.1.6.20');
+    wp_enqueue_style('dapfforwcpro-admin-style', plugin_dir_url(__FILE__) . 'assets/css/admin-style.min.css', [], '1.1.7');
     wp_enqueue_code_editor(array('type' => 'text/html'));
     wp_enqueue_script('wp-theme-plugin-editor');
     wp_enqueue_style('wp-codemirror');
-    wp_enqueue_script('dapfforwcpro-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.min.js', [], '1.1.6.20', true);
+    wp_enqueue_script('dapfforwcpro-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-script.min.js', [], '1.1.7', true);
     wp_enqueue_media();
     wp_enqueue_script('dapfforwcpro-media-uploader', plugin_dir_url(__FILE__) . 'assets/js/media-uploader.min.js', ['jquery'], '1.0.0', true);
 
     $inline_script = 'document.addEventListener("DOMContentLoaded", function () {
     const dropdown = document.getElementById("attribute-dropdown");
 
-    const savedAttribute = localStorage.getItem("dapfforwcpro_selected_attribute");
+    const savedAttribute = localStorage.getItem("dapfforwc_selected_attribute");
     if (savedAttribute) {
         try {
             const parsed = JSON.parse(savedAttribute);
@@ -349,7 +352,7 @@ function dapfforwcpropro_admin_scripts($hook)
                     }
                 }
 
-                 if (selectedAttribute === "price") {
+                if (selectedAttribute === "price") {
                     toggleDisplay(".primary_options label", "none");
                     toggleDisplay(".primary_options label.price", "block");
                     toggleDisplay(".min-max-price-set", "block");
@@ -395,9 +398,7 @@ function dapfforwcpropro_admin_scripts($hook)
         } catch (e) {}
     }
 
-    if(dropdown){const firstAttribute = dropdown.value;
-
-   if(dropdown){
+    if(dropdown){
         const firstAttribute = dropdown.value;
         const firstOptions = document.querySelector(`#options-${firstAttribute}`);
         if (firstOptions) {
@@ -414,7 +415,7 @@ function dapfforwcpropro_admin_scripts($hook)
     if(dropdown)dropdown.addEventListener("change", function () {
     const selectedAttribute = this.value;
     
-    localStorage.setItem("dapfforwcpro_selected_attribute", JSON.stringify({ "attribute": selectedAttribute }));
+    localStorage.setItem("dapfforwc_selected_attribute", JSON.stringify({ "attribute": selectedAttribute }));
 
     toggleDisplay(".style-options", "none");
 
@@ -426,65 +427,50 @@ function dapfforwcpropro_admin_scripts($hook)
     }
 
     if (selectedAttribute === "price") {
-    toggleDisplay(".primary_options label", "none");
-    toggleDisplay(".primary_options label.price", "block");
-    toggleDisplay(".min-max-price-set", "block");
-    toggleDisplay(".setting-item.single-selection", "block");
-    toggleDisplay(".setting-item.show-product-count", "block");
-}
-else if (selectedAttribute === "rating") {
-    toggleDisplay(".min-max-price-set", "none");
-    toggleDisplay(".primary_options label", "none");
-    toggleDisplay(".primary_options label.rating", "block");
-    toggleDisplay(".setting-item.single-selection", "none");
-    toggleDisplay(".setting-item.show-product-count", "none");
-} else if(selectedAttribute === "product-category"){
-    toggleDisplay(".hierarchical", "block");
-    toggleDisplay(".min-max-price-set", "none");
-    toggleDisplay(".primary_options label", "block");
-    toggleDisplay(".primary_options label.price", "none");
-    toggleDisplay(".primary_options label.rating", "none");
-    toggleDisplay(".setting-item.show-product-count", "block");
-    toggleDisplay(".primary_options label.color", "none");
-    toggleDisplay(".primary_options label.image", "none");
-}else if(selectedAttribute === "tag"){
-    toggleDisplay(".hierarchical", "none");
-    toggleDisplay(".min-max-price-set", "none");
-    toggleDisplay(".primary_options label", "block");
-    toggleDisplay(".primary_options label.price", "none");
-    toggleDisplay(".primary_options label.rating", "none");
-    toggleDisplay(".setting-item.show-product-count", "block");
-    toggleDisplay(".primary_options label.color", "none");
-    toggleDisplay(".primary_options label.image", "none");
-}
-else {
-    toggleDisplay(".min-max-price-set", "none");
-    toggleDisplay(".hierarchical", "none");
-    toggleDisplay(".primary_options label", "block");
-    toggleDisplay(".primary_options label.price", "none");
-    toggleDisplay(".primary_options label.rating", "none");
-    toggleDisplay(".setting-item.single-selection", "block");
-    toggleDisplay(".setting-item.show-product-count", "block");
-}
-});
-
-    document.querySelectorAll(".style-options .primary_options label").forEach(function (label) {
-        label.addEventListener("click", function () {
-            const checkIcon = this.querySelector(".active");
-            if (checkIcon) {
-                checkIcon.style.display = "inline"; // Show check icon
-            }
-            this.classList.add("active");
-            document.querySelectorAll(".style-options .primary_options label").forEach(otherLabel => {
-                if (otherLabel !== this) {
-                    otherLabel.classList.remove("active");
-                    const otherCheckIcon = otherLabel.querySelector(".active");
-                    if (otherCheckIcon) {
-                        otherCheckIcon.style.display = "none"; // Hide check icon
-                    }
-                }
-            });
-        });
+        toggleDisplay(".primary_options label", "none");
+        toggleDisplay(".hierarchical", "none");
+        toggleDisplay(".primary_options label.price", "block");
+        toggleDisplay(".primary_options label.rating", "none");
+        toggleDisplay(".min-max-price-set", "block");
+        toggleDisplay(".setting-item.single-selection", "none");
+        toggleDisplay(".setting-item.show-product-count", "none");
+    }
+    else if (selectedAttribute === "rating") {
+        toggleDisplay(".min-max-price-set", "none");
+        toggleDisplay(".hierarchical", "none");
+        toggleDisplay(".primary_options label", "none");
+        toggleDisplay(".primary_options label.price", "none");
+        toggleDisplay(".primary_options label.rating", "block");
+        toggleDisplay(".setting-item.single-selection", "none");
+        toggleDisplay(".setting-item.show-product-count", "none");
+    } else if(selectedAttribute === "product-category"){
+        toggleDisplay(".hierarchical", "block");
+        toggleDisplay(".min-max-price-set", "none");
+        toggleDisplay(".primary_options label", "block");
+        toggleDisplay(".primary_options label.price", "none");
+        toggleDisplay(".primary_options label.rating", "none");
+        toggleDisplay(".setting-item.show-product-count", "block");
+        toggleDisplay(".primary_options label.color", "none");
+        toggleDisplay(".primary_options label.image", "none");
+    }else if(selectedAttribute === "tag"){
+        toggleDisplay(".hierarchical", "none");
+        toggleDisplay(".min-max-price-set", "none");
+        toggleDisplay(".primary_options label", "block");
+        toggleDisplay(".primary_options label.price", "none");
+        toggleDisplay(".primary_options label.rating", "none");
+        toggleDisplay(".setting-item.show-product-count", "block");
+        toggleDisplay(".primary_options label.color", "none");
+        toggleDisplay(".primary_options label.image", "none");
+    }
+    else {
+        toggleDisplay(".min-max-price-set", "none");
+        toggleDisplay(".hierarchical", "none");
+        toggleDisplay(".primary_options label", "block");
+        toggleDisplay(".primary_options label.price", "none");
+        toggleDisplay(".primary_options label.rating", "none");
+        toggleDisplay(".setting-item.single-selection", "block");
+        toggleDisplay(".setting-item.show-product-count", "block");
+    }
 });
 
     document.querySelectorAll(`.style-options .primary_options input[type="radio"][name^="dapfforwc_style_options"]`).forEach(function (radio) {
@@ -595,14 +581,14 @@ attachSubOptionListeners();
 // }
 
 
-function dapfforwcpropro_add_settings_link($links)
+function dapfforwcpro_add_settings_link($links)
 {
     $settings_link = '<a href="admin.php?page=dapfforwcpro-admin">Settings</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
 
-function dapfforwcpropro_get_full_slug($post_id)
+function dapfforwcpro_get_full_slug($post_id)
 {
     if (empty($post_id)) {
         return ''; // Return an empty string if $post_id is not defined
@@ -632,7 +618,7 @@ require_once(plugin_dir_path(__FILE__) . 'includes/widget_design_template.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/blocks_widget_create.php');
 
 // block editor script
-function dapfforwcpropro_enqueue_dynamic_ajax_filter_block_assets()
+function dapfforwcpro_enqueue_dynamic_ajax_filter_block_assets()
 {
     wp_enqueue_script(
         'dynamic-ajax-filter-block',
@@ -642,21 +628,21 @@ function dapfforwcpropro_enqueue_dynamic_ajax_filter_block_assets()
         true
     );
 
-    wp_enqueue_style('custom-box-control-styles', plugin_dir_url(__FILE__) . 'assets/css/block-editor.min.css', [], '1.1.6.20');
+    wp_enqueue_style('custom-box-control-styles', plugin_dir_url(__FILE__) . 'assets/css/block-editor.min.css', [], '1.1.7');
 }
-add_action('enqueue_block_editor_assets', 'dapfforwcpropro_enqueue_dynamic_ajax_filter_block_assets');
+add_action('enqueue_block_editor_assets', 'dapfforwcpro_enqueue_dynamic_ajax_filter_block_assets');
 
 
 
 
 
 
-function dapfforwcpropro_add_debug_menu($wp_admin_bar)
+function dapfforwcpro_add_debug_menu($wp_admin_bar)
 {
     if (current_user_can('administrator')) {
         $args = [
             'id'    => 'dapfforwcpro_debug',
-            'title' => '<span class="ab-icon dashicons dashicons-filter"></span><span id="dapfforwcpro_issue_count"></span> ' . __('Product Filter', 'dynamic-ajax-product-filters-for-woocommerce'),
+            'title' => '<span class="ab-icon dashicons dashicons-filter"></span><span id="dapfforwcpro_issue_count"></span> ' . __('Product Filter', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
             'meta'  => [
                 'class' => 'dapfforwcpro-debug-bar',
             ],
@@ -666,7 +652,7 @@ function dapfforwcpropro_add_debug_menu($wp_admin_bar)
         $wp_admin_bar->add_node([
             'id'     => 'dapfforwcpro_debug_sub',
             'parent' => 'dapfforwcpro_debug',
-            'title'  => '<span id="dapfforwcpro_debug_message">' . __('Checking...', 'dynamic-ajax-product-filters-for-woocommerce') . '</span>',
+            'title'  => '<span id="dapfforwcpro_debug_message">' . __('Checking...', 'dynamic-ajax-product-filters-for-woocommerce-pro') . '</span>',
             'meta'   => [
                 'class' => 'ab-sub-wrapper',
             ],
@@ -674,9 +660,9 @@ function dapfforwcpropro_add_debug_menu($wp_admin_bar)
     }
 }
 
-add_action('wp_footer', 'dapfforwcpropro_check_elements');
+add_action('wp_footer', 'dapfforwcpro_check_elements');
 
-function dapfforwcpropro_check_elements()
+function dapfforwcpro_check_elements()
 {
     global $dapfforwcpro_advance_settings;
     if (current_user_can('administrator')) {
@@ -686,19 +672,19 @@ function dapfforwcpropro_check_elements()
                 var debugMessage = document.getElementById('dapfforwcpro_debug_message');
                 var issueCount = document.getElementById('dapfforwcpro_issue_count');
                 if (!document.querySelector('#product-filter')) {
-                    debugMessage.innerHTML = '<span style="color: red;">&#10007;</span> <?php echo esc_html__('Filter is not added', 'dynamic-ajax-product-filters-for-woocommerce'); ?>';
+                    debugMessage.innerHTML = '<span style="color: red;">&#10007;</span> <?php echo esc_html__('Filter is not added', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>';
                     issueCount.innerHTML = '1';
                     issueCount.style.display = 'block';
                 } else if (!document.querySelector('<?php echo esc_js(isset($dapfforwcpro_advance_settings["product_selector"]) && !empty($dapfforwcpro_advance_settings["product_selector"]) ? $dapfforwcpro_advance_settings["product_selector"] : ''); ?>')) {
-                    debugMessage.innerHTML = '<span style="color: red;">&#10007;</span> <?php echo esc_html__('Products are not found. Add product or', 'dynamic-ajax-product-filters-for-woocommerce'); ?> <a href="#" style="display: inline; padding: 0;"><?php echo esc_html__('change selector', 'dynamic-ajax-product-filters-for-woocommerce'); ?></a>';
+                    debugMessage.innerHTML = '<span style="color: red;">&#10007;</span> <?php echo esc_html__('Products are not found. Add product or', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?> <a href="#" style="display: inline; padding: 0;"><?php echo esc_html__('change selector', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></a>';
                     issueCount.innerHTML = '1';
                     issueCount.style.display = 'block';
                 } else if (!document.querySelector('<?php echo esc_js(isset($dapfforwcpro_advance_settings["pagination_selector"]) && !empty($dapfforwcpro_advance_settings["pagination_selector"]) ? $dapfforwcpro_advance_settings["pagination_selector"] : ''); ?>')) {
-                    debugMessage.innerHTML = '<span style="color: red;">&#10007;</span> <?php echo esc_html__('Pagination is not found', 'dynamic-ajax-product-filters-for-woocommerce'); ?> <a href="#" style="display: inline; padding: 0;"><?php echo esc_html__('change selector', 'dynamic-ajax-product-filters-for-woocommerce'); ?></a>';
+                    debugMessage.innerHTML = '<span style="color: red;">&#10007;</span> <?php echo esc_html__('Pagination is not found', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?> <a href="#" style="display: inline; padding: 0;"><?php echo esc_html__('change selector', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></a>';
                     issueCount.innerHTML = '1';
                     issueCount.style.display = 'block';
                 } else {
-                    debugMessage.innerHTML = '<span style="color: green;">&#10003;</span> <?php echo esc_html__('Filter working fine', 'dynamic-ajax-product-filters-for-woocommerce'); ?>';
+                    debugMessage.innerHTML = '<span style="color: green;">&#10003;</span> <?php echo esc_html__('Filter working fine', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>';
 
                 }
             });
@@ -721,17 +707,17 @@ function dapfforwcpropro_check_elements()
 
 
 
-function dapfforwcpropro_register_api_routes()
+function dapfforwcpro_register_api_routes()
 {
-    register_rest_route('dynamic-ajax-product-filters-for-woocommerce/v1', '/attributes/', array(
+    register_rest_route('dynamic-ajax-product-filters-for-woocommerce-pro/v1', '/attributes/', array(
         'methods' => 'GET',
-        'callback' => 'dapfforwcpropro_get_product_attributes',
+        'callback' => 'dapfforwcpro_get_product_attributes',
         'permission_callback' => '__return_true', // Adjust permissions as needed
     ));
 }
-add_action('rest_api_init', 'dapfforwcpropro_register_api_routes');
+add_action('rest_api_init', 'dapfforwcpro_register_api_routes');
 
-function dapfforwcpropro_get_product_attributes()
+function dapfforwcpro_get_product_attributes()
 {
     // Fetch WooCommerce attribute taxonomies
     $attributes = wc_get_attribute_taxonomies();
@@ -746,14 +732,14 @@ function dapfforwcpropro_get_product_attributes()
     }
 
     if (empty($result)) {
-        return new WP_Error('no_attributes', __('No product attributes found', 'dynamic-ajax-product-filters-for-woocommerce'), array('status' => 404));
+        return new WP_Error('no_attributes', __('No product attributes found', 'dynamic-ajax-product-filters-for-woocommerce-pro'), array('status' => 404));
     }
 
     return rest_ensure_response($result);
 }
 
 /** * Set custom SEO meta tags based on URL parameters */
-function dapfforwcpropro_set_seo_meta_tags()
+function dapfforwcpro_set_seo_meta_tags()
 {
     global $dapfforwc_seo_permalinks_options;
 
@@ -829,9 +815,9 @@ function dapfforwcpropro_set_seo_meta_tags()
         $page_title = get_the_title();
     }
 
-    $seo_title = str_replace(array_keys(dapfforwcpropro_replacement($seo_title, $query_params, $site_title, $page_title)), array_values(dapfforwcpropro_replacement($seo_title, $query_params, $site_title, $page_title)), $seo_title);
-    $seo_description = str_replace(array_keys(dapfforwcpropro_replacement($seo_description, $query_params, $site_title, $page_title)), array_values(dapfforwcpropro_replacement($seo_description, $query_params, $site_title, $page_title)), $seo_description);
-    $seo_keywords = str_replace(array_keys(dapfforwcpropro_replacement($seo_keywords, $query_params, $site_title, $page_title)), array_values(dapfforwcpropro_replacement($seo_keywords, $query_params, $site_title, $page_title)), $seo_keywords);
+    $seo_title = str_replace(array_keys(dapfforwcpro_replacement($seo_title, $query_params, $site_title, $page_title)), array_values(dapfforwcpro_replacement($seo_title, $query_params, $site_title, $page_title)), $seo_title);
+    $seo_description = str_replace(array_keys(dapfforwcpro_replacement($seo_description, $query_params, $site_title, $page_title)), array_values(dapfforwcpro_replacement($seo_description, $query_params, $site_title, $page_title)), $seo_description);
+    $seo_keywords = str_replace(array_keys(dapfforwcpro_replacement($seo_keywords, $query_params, $site_title, $page_title)), array_values(dapfforwcpro_replacement($seo_keywords, $query_params, $site_title, $page_title)), $seo_keywords);
 
     // Clean up any extra spaces
     $seo_title = preg_replace('/\s+/', ' ', trim($seo_title));
@@ -859,7 +845,7 @@ function dapfforwcpropro_set_seo_meta_tags()
     echo '<meta name="twitter:description" content="' . esc_attr($seo_description) . '">' . "\n";
 }
 
-function dapfforwcpropro_replacement($current_place, $query_params, $site_title, $page_title)
+function dapfforwcpro_replacement($current_place, $query_params, $site_title, $page_title)
 {
     // New approach: Extract attribute-value pairs directly from query_params
     $formatted_pairs = [];
@@ -910,7 +896,7 @@ function dapfforwcpropro_replacement($current_place, $query_params, $site_title,
 }
 
 
-function dapfforwcpropro_block_categories($categories, $post)
+function dapfforwcpro_block_categories($categories, $post)
 {
     // Create the new category array
     $new_category = array(
@@ -924,10 +910,10 @@ function dapfforwcpropro_block_categories($categories, $post)
 
     return $categories;
 }
-add_filter('block_categories_all', 'dapfforwcpropro_block_categories', 0, 2);
+add_filter('block_categories_all', 'dapfforwcpro_block_categories', 0, 2);
 
 
-function dapfforwcpropro_editor_script()
+function dapfforwcpro_editor_script()
 {
     if (wp_script_is('plugincy-custom-editor', 'enqueued')) {
         return;
@@ -940,4 +926,211 @@ function dapfforwcpropro_editor_script()
         true
     );
 }
-add_action('enqueue_block_editor_assets', 'dapfforwcpropro_editor_script');
+add_action('enqueue_block_editor_assets', 'dapfforwcpro_editor_script');
+
+
+
+
+
+
+// Add this after your plugin initialization
+add_action('plugins_loaded', 'dapfforwcpro_init_updater');
+
+function dapfforwcpro_init_updater()
+{
+    if (class_exists('DAPFFORWCPRO_License_Manager')) {
+        $license_manager = new DAPFFORWCPRO_License_Manager();
+
+        // Hook into WordPress update system
+        add_filter('pre_set_site_transient_update_plugins', function ($transient) use ($license_manager) {
+            return dapfforwcpro_check_for_plugin_updates($transient, $license_manager);
+        });
+
+        add_filter('plugins_api', function ($result, $action, $args) use ($license_manager) {
+            return dapfforwcpro_plugin_api_call($result, $action, $args, $license_manager);
+        }, 10, 3);
+
+        add_action('upgrader_process_complete', function ($upgrader_object, $options) use ($license_manager) {
+            dapfforwcpro_clear_cache_after_update($upgrader_object, $options, $license_manager);
+        }, 10, 2);
+
+        add_action('admin_notices', array($license_manager, 'show_license_notices'));
+    }
+}
+
+function dapfforwcpro_check_for_plugin_updates($transient, $license_manager)
+{
+    if (empty($transient->checked)) {
+        return $transient;
+    }
+
+    if (!$license_manager->is_license_valid_cached()) {
+        return $transient;
+    }
+
+    $plugin_file = plugin_basename(__FILE__); // This will automatically get the correct path
+    $current_version = defined('DAPFFORWCPRO_VERSION') ? DAPFFORWCPRO_VERSION : '1.0.0';
+
+    $update_info = $license_manager->check_for_updates();
+
+    if ($update_info && version_compare($current_version, $update_info->new_version, '<')) {
+        $transient->response[$plugin_file] = (object) array(
+            'slug' => dirname($plugin_file),
+            'plugin' => $plugin_file,
+            'new_version' => $update_info->new_version,
+            'url' => isset($update_info->homepage) ? $update_info->homepage : 'https://plugincy.com/',
+            'package' => isset($update_info->download_link) ? $update_info->download_link : '',
+            'tested' => /*isset($update_info->tested) ? $update_info->tested :*/ get_bloginfo('version'),
+            'requires_php' => isset($update_info->requires_php) ? $update_info->requires_php : '7.0',
+            'compatibility' => new stdClass()
+        );
+    }
+
+    return $transient;
+}
+
+
+function dapfforwcpro_plugin_api_call($result, $action, $args, $license_manager)
+{
+    if ($action !== 'plugin_information') {
+        return $result;
+    }
+
+    $plugin_slug = dirname(plugin_basename(__FILE__)); // Auto-detect plugin slug
+
+    if (!isset($args->slug) || $args->slug !== $plugin_slug) {
+        return $result;
+    }
+
+    if (!$license_manager->is_license_valid_cached()) {
+        return $result;
+    }
+
+    $license_key = get_option('dapfforwcpro_license_key', '');
+    $version_info = $license_manager->get_version_info($license_key);
+
+    if ($version_info) {
+        // Unserialize sections if they exist and are serialized
+        $sections = array(
+            'description' => 'Professional dynamic AJAX product filtering solution for WooCommerce.',
+            'changelog' => 'Various improvements and bug fixes.'
+        );
+
+        if (isset($version_info->sections)) {
+            if (is_string($version_info->sections)) {
+                // If sections is a serialized string, unserialize it
+                $unserialized_sections = @unserialize($version_info->sections);
+                if ($unserialized_sections !== false && is_array($unserialized_sections)) {
+                    $sections = array_merge($sections, $unserialized_sections);
+                }
+            } elseif (is_object($version_info->sections)) {
+                // If sections is already an object, convert to array
+                $sections = array_merge($sections, (array)$version_info->sections);
+            } elseif (is_array($version_info->sections)) {
+                // If sections is already an array
+                $sections = array_merge($sections, $version_info->sections);
+            }
+        }
+
+        // Handle banners
+        $banners = array();
+        if (isset($version_info->banners)) {
+            if (is_string($version_info->banners)) {
+                // If banners is a serialized string, unserialize it
+                $unserialized_banners = @unserialize($version_info->banners);
+                if ($unserialized_banners !== false && is_array($unserialized_banners)) {
+                    $banners = $unserialized_banners;
+                }
+            } elseif (is_object($version_info->banners)) {
+                // If banners is already an object, convert to array
+                $banners = (array)$version_info->banners;
+            } elseif (is_array($version_info->banners)) {
+                // If banners is already an array
+                $banners = $version_info->banners;
+            }
+        }
+
+        // Handle screenshots - WordPress expects array of URLs with numeric keys
+        $base_url = "https://ps.w.org/dynamic-ajax-product-filters-for-woocommerce/assets/";
+        $default_screenshots = array(
+            "1" => "Filters Demo 1",
+            "2" => "Filters Demo 2",
+            "3" => "Filters Demo 3",
+            "4" => "Filters Demo 4 - Mobile View",
+            "5" => "Filters Demo 5 - Mobile View",
+            "6" => "Form Manage Settings",
+            "7" => "Form Style Settings",
+            "8" => "Plugin Advance Settings"
+        );
+
+        // Get captions from server or use defaults
+        $screenshot_captions = $default_screenshots;
+        if (isset($version_info->screenshots)) {
+            if (is_string($version_info->screenshots)) {
+                $unserialized_screenshots = @unserialize($version_info->screenshots);
+                if ($unserialized_screenshots !== false && is_array($unserialized_screenshots)) {
+                    $screenshot_captions = $unserialized_screenshots;
+                }
+            } elseif (is_object($version_info->screenshots)) {
+                $screenshot_captions = (array)$version_info->screenshots;
+            } elseif (is_array($version_info->screenshots)) {
+                $screenshot_captions = $version_info->screenshots;
+            }
+        }
+
+        // Also add screenshot captions to sections for better display
+        if (!empty($screenshot_captions)) {
+            $screenshot_section = "<ol>";
+            foreach ($screenshot_captions as $number => $caption) {
+                $screenshot_section .= "<li>";
+                $screenshot_section .= "<a href='{$base_url}screenshot-{$number}.png' target='_blank'><img class='screenshots' src='{$base_url}screenshot-{$number}.png' alt='{$caption}'></a><p>{$caption}</p>";
+                $screenshot_section .= "</li>";
+            }
+            $screenshot_section .= "</ol>";
+            $sections['screenshots'] = $screenshot_section;
+        }
+
+        return (object) array(
+            'name' => 'Dynamic AJAX Product Filters Pro',
+            'slug' => $plugin_slug,
+            'version' => $version_info->new_version,
+            'author' => '<a href="https://plugincy.com">Plugincy</a>',
+            'homepage' => 'https://plugincy.com/',
+            'requires' => isset($version_info->requires) ? $version_info->requires : '5.0',
+            'tested' => /*isset($version_info->tested) ? $version_info->tested :*/ get_bloginfo('version'),
+            'requires_php' => isset($version_info->requires_php) ? $version_info->requires_php : '7.0',
+            'contributors' => array(
+                'plugincy' => array(
+                    'profile' => 'https://profiles.wordpress.org/plugincy/',
+                    'avatar' => 'https://secure.gravatar.com/avatar/ee0db1e8766d68a4bc66e91b4098310d9604ca7670ac9662c15915c517662b39',
+                    'display_name' => 'Plugincy'
+                )
+            ),
+            'sections' => $sections,
+            'banners' => $banners,
+            'download_link' => isset($version_info->download_link) ? $version_info->download_link : ''
+        );
+    }
+
+    return $result;
+}
+
+function dapfforwcpro_clear_cache_after_update($upgrader_object, $options, $license_manager)
+{
+    if ($options['action'] === 'update' && $options['type'] === 'plugin') {
+        $plugin_file = plugin_basename(__FILE__);
+
+        if (isset($options['plugins']) && in_array($plugin_file, $options['plugins'])) {
+            $license_manager->clear_all_cache();
+        }
+    }
+}
+
+// Add this temporarily for testing - remove after testing
+add_action('admin_init', function () {
+    if (isset($_GET['force_check_updates']) && $_GET['force_check_updates'] === '1') {
+        delete_site_transient('update_plugins');
+        wp_redirect(admin_url('plugins.php'));
+        exit;
+    }
+});

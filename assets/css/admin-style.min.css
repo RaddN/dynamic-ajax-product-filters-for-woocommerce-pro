@@ -171,9 +171,13 @@
   position: absolute;
   right: 0;
 }
+.wcapf_admin .primary_options .active.pro-only .active,
+.wcapf_admin .sub-options .dynamic-sub-options .active.pro-only .active {
+  opacity: 0;
+}
 .wcapf_admin .pro-only-2:before,
 .wcapf_admin .pro-only:hover:before {
-  content: "Pro Features only -- Coming Soon --";
+  content: "Pro Features only";
   background: red;
   color: #fff;
   position: absolute;
@@ -366,9 +370,6 @@
   bottom: 0;
   top: unset;
   left: 0;
-}
-.wcapf_admin .customizer-pro-overlay:before {
-  left: 23%;
 }
 .wcapf_admin input:disabled + .slider {
     opacity: 0.5;

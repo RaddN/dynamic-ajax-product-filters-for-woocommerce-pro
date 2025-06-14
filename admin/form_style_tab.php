@@ -15,10 +15,10 @@ if (!defined('ABSPATH')) {
 
     // Define extra options
     $dapfforwcpro_extra_options = [
-        (object) ['attribute_name' => "product-category", 'attribute_label' => __('Category Options', 'dynamic-ajax-product-filters-for-woocommerce')],
-        (object) ['attribute_name' => 'tag', 'attribute_label' => __('Tag Options', 'dynamic-ajax-product-filters-for-woocommerce')],
-        (object) ['attribute_name' => 'price', 'attribute_label' => __('Price', 'dynamic-ajax-product-filters-for-woocommerce')],
-        (object) ['attribute_name' => 'rating', 'attribute_label' => __('Rating', 'dynamic-ajax-product-filters-for-woocommerce')],
+        (object) ['attribute_name' => "product-category", 'attribute_label' => __('Category Options', 'dynamic-ajax-product-filters-for-woocommerce-pro')],
+        (object) ['attribute_name' => 'tag', 'attribute_label' => __('Tag Options', 'dynamic-ajax-product-filters-for-woocommerce-pro')],
+        (object) ['attribute_name' => 'price', 'attribute_label' => __('Price', 'dynamic-ajax-product-filters-for-woocommerce-pro')],
+        (object) ['attribute_name' => 'rating', 'attribute_label' => __('Rating', 'dynamic-ajax-product-filters-for-woocommerce-pro')],
     ];
 
     // Combine attributes and extra options
@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
     <?php if (!empty($dapfforwcpro_all_options)) : ?>
         <div class="attribute-selection">
             <label for="attribute-dropdown">
-                <strong><?php esc_html_e('Select Attribute:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong>
+                <strong><?php esc_html_e('Select Attribute:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong>
             </label>
             <select id="attribute-dropdown" style="margin-bottom: 20px;">
                 <?php foreach ($dapfforwcpro_all_options as $option) : ?>
@@ -73,16 +73,17 @@ if (!defined('ABSPATH')) {
 
                     <!-- Sub-Options -->
                     <div class="sub-options" style="margin-left: 20px;">
-                        <p><strong><?php esc_html_e('Additional Options:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                        <p><strong><?php esc_html_e('Additional Options:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                         <div class="dynamic-sub-options">
                             <?php foreach ($dapfforwcpro_sub_options[$dapfforwcpro_selected_style] as $key => $label) : ?>
 
                                 <label class="<?php echo $dapfforwcpro_sub_option === $key ? 'active ' : '';
-                                                echo esc_attr($key); ?>">
+                                                echo esc_attr($key);
+                                                echo !dapfforwcpro_premium_feature() && ($key === "dynamic-rating" || $key === "input-price-range") ? ' pro-only' : ''; ?>">
                                     <span class="active" style="display:none;"><i class="fa fa-check"></i></span>
                                     <input <?php if ($key === "dynamic-rating" || $key === "input-price-range") {
-                                                // echo "disabled";
-                                            } ?> type="radio" class="optionselect" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][sub_option]" value="<?php echo esc_attr($key); ?>" <?php checked($dapfforwcpro_sub_option, $key); ?>>
+                                                echo dapfforwcpro_premium_feature() ? '' : 'disabled';
+                                            } ?> type="radio" class="optionselect" name="<?php echo !dapfforwcpro_premium_feature() && ($key === "dynamic-rating" || $key === "input-price-range") ? '_pro' : 'dapfforwc_style_options'; ?>[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][sub_option]" value="<?php echo esc_attr($key); ?>" <?php checked($dapfforwcpro_sub_option, $key); ?>>
                                     <img src="<?php echo esc_url(plugins_url('../assets/images/' . $key . '.png', __FILE__)); ?>" alt="<?php echo esc_attr($label); ?>">
                                     <!-- <div class="title"> -->
                                     <?php
@@ -103,12 +104,12 @@ if (!defined('ABSPATH')) {
                         if ($dapfforwcpro_attribute_name !== "product-category" || $dapfforwcpro_attribute_name !== "tag") {
                         ?>
                             <div class="advanced-options <?php echo esc_attr($dapfforwcpro_attribute_name); ?>" style="display: <?php echo $dapfforwcpro_selected_style === 'color' || $dapfforwcpro_selected_style === 'image' ? 'block' : 'none'; ?>;">
-                                <h4><?php esc_html_e('Advanced Options for Terms', 'dynamic-ajax-product-filters-for-woocommerce'); ?></h4>
+                                <h4><?php esc_html_e('Advanced Options for Terms', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></h4>
                                 <?php if (!empty($dapfforwcpro_terms)) : ?>
 
                                     <!-- Color Options -->
                                     <div class="color" style="display: <?php echo $dapfforwcpro_selected_style === 'color' ? 'block' : 'none'; ?>;">
-                                        <h5><?php esc_html_e('Set Colors for Terms', 'dynamic-ajax-product-filters-for-woocommerce'); ?></h5>
+                                        <h5><?php esc_html_e('Set Colors for Terms', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></h5>
                                         <?php foreach ($dapfforwcpro_terms as $term) :
                                             if (is_object($term) && property_exists($term, 'slug')) {
                                                 $dapfforwcpro_color_value = $dapfforwcpro_form_styles[$dapfforwcpro_attribute_name]['colors'][$term->slug]
@@ -129,15 +130,15 @@ if (!defined('ABSPATH')) {
                                                 <input type="color" id="color-<?php if (is_object($term) && property_exists($term, 'slug')) {
                                                                                     echo esc_attr($term->slug);
                                                                                 } ?>" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][colors][<?php if (is_object($term) && property_exists($term, 'slug')) {
-                                                                                                                                                                                    echo esc_attr($term->slug);
-                                                                                                                                                                                } ?>]" value="<?php echo esc_attr($dapfforwcpro_color_value); ?>">
+                                                                                                                                                                                        echo esc_attr($term->slug);
+                                                                                                                                                                                    } ?>]" value="<?php echo esc_attr($dapfforwcpro_color_value); ?>">
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
 
                                     <!-- Image Options -->
                                     <div class="image" style="display: <?php echo $dapfforwcpro_selected_style === 'image' ? 'block' : 'none'; ?>;">
-                                        <h5><?php esc_html_e('Set Images for Terms', 'dynamic-ajax-product-filters-for-woocommerce'); ?></h5>
+                                        <h5><?php esc_html_e('Set Images for Terms', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></h5>
                                         <?php foreach ($dapfforwcpro_terms as $term) :
                                             if (is_object($term) && property_exists($term, 'slug')) {
                                                 $dapfforwcpro_image_value = $dapfforwcpro_form_styles[$dapfforwcpro_attribute_name]['images'][$term->slug] ?? ''; // Fetch stored image URL
@@ -157,15 +158,15 @@ if (!defined('ABSPATH')) {
                                                 <input type="text" id="image-<?php if (is_object($term) && property_exists($term, 'slug')) {
                                                                                     echo esc_attr($term->slug);
                                                                                 } ?>" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][images][<?php if (is_object($term) && property_exists($term, 'slug')) {
-                                                                                                                                                                                    echo esc_attr($term->slug);
-                                                                                                                                                                                } ?>]" value="<?php echo esc_attr($dapfforwcpro_image_value); ?>" placeholder="<?php esc_attr_e('Image URL', 'dynamic-ajax-product-filters-for-woocommerce'); ?>">
-                                                <button type="button" class="upload-image-button"><?php esc_html_e('Upload', 'dynamic-ajax-product-filters-for-woocommerce'); ?></button>
+                                                                                                                                                                                        echo esc_attr($term->slug);
+                                                                                                                                                                                    } ?>]" value="<?php echo esc_attr($dapfforwcpro_image_value); ?>" placeholder="<?php esc_attr_e('Image URL', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>">
+                                                <button type="button" class="upload-image-button"><?php esc_html_e('Upload', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></button>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
 
                                 <?php else : ?>
-                                    <p><?php esc_html_e('No terms found. Please create terms for this attribute first.', 'dynamic-ajax-product-filters-for-woocommerce'); ?></p>
+                                    <p><?php esc_html_e('No terms found. Please create terms for this attribute first.', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></p>
                                 <?php endif; ?>
                             </div>
                         <?php } ?>
@@ -174,32 +175,39 @@ if (!defined('ABSPATH')) {
 
                         <!-- Optional Settings -->
                         <div class="optional_settings">
-                            <h4><?php esc_html_e('Optional Settings:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></h4>
+                            <h4><?php esc_html_e('Optional Settings:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></h4>
 
                             <div class="row">
                                 <div class="col-6">
                                     <!-- Hierarchical -->
                                     <div class="setting-item hierarchical" style="display:none;">
-                                        <p><strong><?php esc_html_e('Enable Hierarchical:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                                        <p><strong><?php esc_html_e('Enable Hierarchical:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                                         <label>
                                             <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][hierarchical][type]" value="disabled"
-                                                <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? '', 'disabled'); ?>>
-                                            <?php esc_html_e('Disabled', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php
+                                                $hierarchical_type = $dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? 'disabled';
+                                                checked($hierarchical_type === 'disabled' || (!dapfforwcpro_premium_feature() && $hierarchical_type === 'enable_separate'));
+                                                ?>>
+                                            <?php esc_html_e('Disabled', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                         </label>
                                         <label>
                                             <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][hierarchical][type]" value="enable"
-                                                <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? '', 'enable'); ?>>
-                                            <?php esc_html_e('Enabled', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? 'disabled', 'enable'); ?>>
+                                            <?php esc_html_e('Enabled', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                         </label>
-                                        <label>
-                                            <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][hierarchical][type]" value="enable_separate"
-                                                <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? '', 'enable_separate'); ?>>
-                                            <?php esc_html_e('Enabled & Seperate', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                        <label <?php echo dapfforwcpro_premium_feature() ? '' : 'class="pro-only"'; ?>>
+                                            <?php if (dapfforwcpro_premium_feature()) : ?>
+                                                <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][hierarchical][type]" value="enable_separate"
+                                                    <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? 'disabled', 'enable_separate'); ?>>
+                                            <?php else : ?>
+                                                <input disabled type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][hierarchical][type]" value="disabled">
+                                            <?php endif; ?>
+                                            <?php esc_html_e('Enabled & Seperate', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                         </label>
                                         <label>
                                             <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][hierarchical][type]" value="enable_hide_child"
-                                                <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? '', 'enable_hide_child'); ?>>
-                                            <?php esc_html_e('Enabled & hide child', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['hierarchical']['type'] ?? 'disabled', 'enable_hide_child'); ?>>
+                                            <?php esc_html_e('Enabled & hide child', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                         </label>
                                     </div>
                                     <?php if ($dapfforwcpro_attribute_name === "price") { ?>
@@ -214,7 +222,7 @@ if (!defined('ABSPATH')) {
                                             $product_min = isset($dapfforwcpro_form_styles[$dapfforwcpro_attribute_name]["min_price"]) ? esc_attr($dapfforwcpro_form_styles[$dapfforwcpro_attribute_name]["min_price"]) : 0;
                                             $product_max = isset($dapfforwcpro_form_styles[$dapfforwcpro_attribute_name]["max_price"]) ? esc_attr($dapfforwcpro_form_styles[$dapfforwcpro_attribute_name]["max_price"]) : $min_max_prices['max'] ?? 0;
                                             ?>
-                                            <p><strong><?php esc_html_e('Set Min & Max Price:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                                            <p><strong><?php esc_html_e('Set Min & Max Price:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                                             <p>Auto Set <label id="auto_price" class="switch auto_price">
                                                     <input type="checkbox" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][auto_price]" <?php echo isset($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['auto_price']) && $dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['auto_price'] == "on" ? 'checked' : ''; ?>>
                                                     <span class="slider round"></span>
@@ -247,47 +255,47 @@ if (!defined('ABSPATH')) {
                                     <!-- Enable Minimization Option -->
                                     <?php if ($dapfforwcpro_attribute_name !== "price") { ?>
                                         <div class="setting-item">
-                                            <p><strong><?php esc_html_e('Enable Minimization Option:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                                            <p><strong><?php esc_html_e('Enable Minimization Option:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                                             <label>
                                                 <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][minimize][type]" value="disabled"
                                                     <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['minimize']['type'] ?? '', 'disabled'); ?>>
-                                                <?php esc_html_e('Disabled', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php esc_html_e('Disabled', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                             </label>
                                             <label>
                                                 <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][minimize][type]" value="arrow"
                                                     <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['minimize']['type'] ?? '', 'arrow'); ?>>
-                                                <?php esc_html_e('Enabled with Arrow', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php esc_html_e('Enabled with Arrow', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                             </label>
                                             <label>
                                                 <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][minimize][type]" value="no_arrow"
                                                     <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['minimize']['type'] ?? '', 'no_arrow'); ?>>
-                                                <?php esc_html_e('Enabled without Arrow', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php esc_html_e('Enabled without Arrow', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                             </label>
                                             <label>
                                                 <input type="radio" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][minimize][type]" value="minimize_initial"
                                                     <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['minimize']['type'] ?? '', 'minimize_initial'); ?>>
-                                                <?php esc_html_e('Initially Minimized', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php esc_html_e('Initially Minimized', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                             </label>
                                         </div>
 
 
                                         <!-- Single Selection Option -->
                                         <div class="setting-item single-selection">
-                                            <p><strong><?php esc_html_e('Single Selection:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                                            <p><strong><?php esc_html_e('Single Selection:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                                             <label>
                                                 <input type="checkbox" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][single_selection]" value="yes"
                                                     <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['single_selection'] ?? '', 'yes'); ?>>
-                                                <?php esc_html_e('Only one value can be selected at a time', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php esc_html_e('Only one value can be selected at a time', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                             </label>
                                         </div>
 
                                         <!-- Show/Hide Number of Products -->
                                         <div class="setting-item show-product-count">
-                                            <p><strong><?php esc_html_e('Show/Hide Number of Products:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                                            <p><strong><?php esc_html_e('Show/Hide Number of Products:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                                             <label>
                                                 <input type="checkbox" name="dapfforwc_style_options[<?php echo esc_attr($dapfforwcpro_attribute_name); ?>][show_product_count]" value="yes"
                                                     <?php checked($dapfforwcpro_form_styles[esc_attr($dapfforwcpro_attribute_name)]['show_product_count'] ?? '', 'yes'); ?>>
-                                                <?php esc_html_e('Show number of products', 'dynamic-ajax-product-filters-for-woocommerce'); ?>
+                                                <?php esc_html_e('Show number of products', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?>
                                             </label>
                                         </div>
                                     <?php } ?>
@@ -296,7 +304,7 @@ if (!defined('ABSPATH')) {
                                     <!-- Max Height -->
                                     <?php if ($dapfforwcpro_attribute_name !== "price") { ?>
                                         <div class="setting-item">
-                                            <p><strong><?php esc_html_e('Max Height:', 'dynamic-ajax-product-filters-for-woocommerce'); ?></strong></p>
+                                            <p><strong><?php esc_html_e('Max Height:', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></strong></p>
                                             <label>
                                                 <?php $max_height = isset($dapfforwcpro_form_styles["max_height"][$dapfforwcpro_attribute_name]) ? esc_attr($dapfforwcpro_form_styles["max_height"][$dapfforwcpro_attribute_name]) : 0; ?>
                                                 <input type="number" name="dapfforwc_style_options[max_height][<?php echo esc_attr($dapfforwcpro_attribute_name); ?>]" value="<?php echo esc_attr($max_height); ?>">
@@ -314,7 +322,7 @@ if (!defined('ABSPATH')) {
             <?php endforeach; ?>
         </div>
     <?php else : ?>
-        <p><?php esc_html_e('No attributes found. Please create attributes in WooCommerce first.', 'dynamic-ajax-product-filters-for-woocommerce'); ?></p>
+        <p><?php esc_html_e('No attributes found. Please create attributes in WooCommerce first.', 'dynamic-ajax-product-filters-for-woocommerce-pro'); ?></p>
     <?php endif; ?>
     <?php submit_button(); ?>
 </form>

@@ -1,14 +1,10 @@
-=== Dynamic AJAX Product Filters for WooCommerce Pro ===
-Plugin Name: Dynamic AJAX Product Filters for WooCommerce Pro
+=== Dynamic AJAX Product Filters for WooCommerce ===
+Plugin Name: Dynamic AJAX Product Filters for WooCommerce
 Contributors: plugincy
 Tags: product filters, ajax product filters, woocommerce ajax product filters, woocommerce filters, advanced product filters, woocommerce product filter, woocommerce filter, product filter, ajax filter, attribute filter
 Requires at least: 4.7
 Tested up to: 6.8
-<<<<<<< HEAD
-Stable tag: 1.1.6.20
-=======
-Stable tag: 1.1.7.3
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
+Stable tag: 1.1.7
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,9 +13,9 @@ Dynamic WooCommerce AJAX Product Filters – Optimize your WooCommerce store wit
 
 == Description ==
 
-Dynamic AJAX Product Filters for WooCommerce Pro is the ultimate solution for WooCommerce store owners seeking to improve their customers' shopping experience. With lightning-fast AJAX technology, customizable filtering options, and a user-friendly interface, our WooCommerce filter plugin simplifies product searches and leads to higher conversions.
+Dynamic AJAX Product Filters for WooCommerce is the ultimate solution for WooCommerce store owners seeking to improve their customers' shopping experience. With lightning-fast AJAX technology, customizable filtering options, and a user-friendly interface, our WooCommerce filter plugin simplifies product searches and leads to higher conversions.
 
-Through our advanced AJAX product filters for WooCommerce; store users can refine their searches by using advanced filtering options, such as price, rating, category, tags, or attributes like size and color. The flexibility of Dynamic AJAX Product Filters for WooCommerce Pro ensures the plugin works perfectly with any WordPress custom themes and supports unlimited filtering options to meet the unique needs of your store.
+Through our advanced AJAX product filters for WooCommerce; store users can refine their searches by using advanced filtering options, such as price, rating, category, tags, or attributes like size and color. The flexibility of Dynamic AJAX Product Filters for WooCommerce ensures the plugin works perfectly with any WordPress custom themes and supports unlimited filtering options to meet the unique needs of your store.
 
 With features like dynamic sorting, Shortcode integration, and pagination, the AJAX filter for WordPress plugin gives users a smooth, efficient browsing experience. Whether you're implementing hierarchical filtering, multi-select options, or advanced dropdown menus, the filter plugin for WordPress WooCommerce;  can be customized to your store’s specific requirements while maintaining high performance and usability for visitors.
 
@@ -27,23 +23,21 @@ With features like dynamic sorting, Shortcode integration, and pagination, the A
 
 = 😍 Key Features: =
 
-✅️  `Advanced Filtering Options`
-  	**By Query String** – Apply filters using query strings (e.g., ?filters).
-  	**AJAX-Powered** – Quick, reload-free filtering for an improved shopping experience.
-✅️  `AJAX Filters, Pagination, and Sorting` – Optimize your store with fast real-time filtering, smooth pagination, and sorting for improved user experience.
-✅️  `Filter by Price, Rating, Category, Tags and Attributes` – Allow customers to filter by price, product category, rating, tags and attributes like size, color, brand, and more.
-✅️  `Custom and Premium Theme Support` – Fully compatible with custom themes as well as popular premium themes, ensuring easy integration.
-✅️  `Filter Visibility Control` – Customize the visibility of filters by product category or global settings.
-✅️  `Shortcode Compatibility` – Add filters anywhere on your site with simple shortcode integration.
-✅️  `Multiple User Interface Elements` – Choose from dropdowns, checkboxes, sliders, and more for varied and advanced filter options.
-✅️  `Speed and Faster` – Optimized for speed and faster than other plugins in this genre.
-✅️  `New Styles for Filters` - Checkbox, radio, Select, Slider, Color, Image, and more.
-✅️  `Upgraded Dropdowns (Select2 option)` -  Improve dropdown menus with our Select2 option for a more interactive and refined filtering experience.
-✅️  `Collapse Widget Options` - Collapse widget option with different settings.
-✅️  `Advanced Elementor Styling` – Add advanced styling options for visually appealing filtering solutions.
-✅️  WordPress Widget, Search by Text, and Many More……
+✅️  `Advanced Filtering Options`<br>&nbsp;&nbsp;**By Query String** – Apply filters using query strings (e.g., ?filters).<br>&nbsp;&nbsp;**AJAX-Powered** – Quick, reload-free filtering for an improved shopping experience.<br>
+✅️  `AJAX Filters, Pagination, and Sorting` – Optimize your store with fast real-time filtering, smooth pagination, and sorting for improved user experience.<br>
+✅️  `Filter by Price, Rating, Category, Tags and Attributes` – Allow customers to filter by price, product category, rating, tags and attributes like size, color, brand, and more.<br>
+✅️  `Custom and Premium Theme Support` – Fully compatible with custom themes as well as popular premium themes, ensuring easy integration.<br>
+✅️  `Filter Visibility Control` – Customize the visibility of filters by product category or global settings.<br>
+✅️  `Shortcode Compatibility` – Add filters anywhere on your site with simple shortcode integration.<br>
+✅️  `Multiple User Interface Elements` – Choose from dropdowns, checkboxes, sliders, and more for varied and advanced filter options.<br>
+✅️  `Speed and Faster` – Optimized for speed and faster than other plugins in this genre.<br>
+✅️  `New Styles for Filters` - Checkbox, radio, Select, Slider, Color, Image, and more.<br>
+✅️  `Upgraded Dropdowns (Select2 option)` -  Improve dropdown menus with our Select2 option for a more interactive and refined filtering experience.<br>
+✅️  `Collapse Widget Options` - Collapse widget option with different settings.<br>
+✅️  `Advanced Elementor Styling` – Add advanced styling options for visually appealing filtering solutions.<br>
+✅️  WordPress Widget, Search by Text, and Many More……<br>
 
-= 🔥 Pro Features (Coming Soon): =
+= 🔥 Pro Features: =
 
 *  **Dynamic Filtering Options**
   * **With Permalinks** – Integrates with custom permalink structures (e.g., `brand/size/color`).
@@ -60,7 +54,7 @@ With features like dynamic sorting, Shortcode integration, and pagination, the A
 * **Free New Features** – Enjoy significant improvements to the free features offered.
 * **Widget Caching** – Optimize performance with caching capabilities for widgets.
 
-= 👉️ Why Use Dynamic AJAX Product Filters for WooCommerce Pro Store? =
+= 👉️ Why Use Dynamic AJAX Product Filters for WooCommerce Store? =
 * Excellent user experience with instant filtering and sorting, powered by AJAX-based filtering.
 * Increase SEO performance with clean and crawlable URLs.
 * Full compatibility with any custom or premium WordPress theme.
@@ -73,7 +67,7 @@ With features like dynamic sorting, Shortcode integration, and pagination, the A
 = From your WordPress dashboard: =
 
 1. **Visit** Plugins > Add New
-2. **Search** for "Dynamic AJAX Product Filters for WooCommerce Pro"
+2. **Search** for "Dynamic AJAX Product Filters for WooCommerce"
 3. **Activate** the plugin from your Plugins page
 4. Configure filter settings in the WooCommerce settings panel under "Product Filters."
 
@@ -112,7 +106,7 @@ With features like dynamic sorting, Shortcode integration, and pagination, the A
 == Frequently Asked Questions ==
 
 = Is This Plugin Compatible With My Theme? =  
-Yes! Dynamic AJAX Product Filters for WooCommerce Pro is compatible with most WordPress themes, including custom and premium themes.
+Yes! Dynamic AJAX Product Filters for WooCommerce is compatible with most WordPress themes, including custom and premium themes.
 
 = How Can I Configure the Filter Options? =
 Simply go to the WordPress admin, locate the “Product Filters” section, and customize the filter options based on your store requirements.
@@ -121,7 +115,7 @@ Simply go to the WordPress admin, locate the “Product Filters” section, and 
 Yes, the plugin supports custom permalink structures, allowing filtered pages to align with your store’s permalink setup.
 
 = Is the Plugin Compatible With Product Variables? =
-Yes, Dynamic AJAX Product Filters for WooCommerce Pro plugin is fully compatible with product variables, allowing smooth filtering based on variations like size, color, and other attributes.
+Yes, Dynamic AJAX Product Filters for WooCommerce plugin is fully compatible with product variables, allowing smooth filtering based on variations like size, color, and other attributes.
 
 = Does This Plugin Support Shortcode Usage? =  
 Yes, you can use the following Shortcode to place filters anywhere on your site.
@@ -129,11 +123,7 @@ Yes, you can use the following Shortcode to place filters anywhere on your site.
 
 == Changelog ==
 
-<<<<<<< HEAD
-= 1.1.6.20 =
-=======
-= 1.1.7.3 =
->>>>>>> bffd825023297ffa4a9003fb4c1fdd5eb3a2e003
+= 1.1.7 =
 * Fix loading effect issue
 * Make more secure
 * Fix vulnerability
@@ -176,4 +166,4 @@ Yes, you can use the following Shortcode to place filters anywhere on your site.
 
 == Additional Information: ==
 
-**Dynamic AJAX Product Filters for WooCommerce Pro** plugin is thoughtfully designed to prioritize flexibility, outstanding performance, and better user experience. Whether you're creating filters for simple or variable products on your WooCommerce store, the AJAX filter for WordPress ensures smooth functionality across your online store. If you encounter any issues, have questions, or need guidance regarding our plugin, our dedicated and knowledgeable support team is always available to assist you promptly and ensure you get the most out of your experience.
+**Dynamic AJAX Product Filters for WooCommerce** plugin is thoughtfully designed to prioritize flexibility, outstanding performance, and better user experience. Whether you're creating filters for simple or variable products on your WooCommerce store, the AJAX filter for WordPress ensures smooth functionality across your online store. If you encounter any issues, have questions, or need guidance regarding our plugin, our dedicated and knowledgeable support team is always available to assist you promptly and ensure you get the most out of your experience.

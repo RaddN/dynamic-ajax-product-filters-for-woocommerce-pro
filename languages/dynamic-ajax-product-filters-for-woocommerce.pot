@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: dynamic-ajax-product-filters-for-woocommerce\n"
+"Project-Id-Version: dynamic-ajax-product-filters-for-woocommerce-pro\n"
 "POT-Creation-Date: 2023-10-01 12:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"

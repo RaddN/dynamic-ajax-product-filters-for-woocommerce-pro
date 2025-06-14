@@ -114,7 +114,7 @@ function dapfforwcpro_filter_form($updated_filters, $default_filter, $use_anchor
       
 <?php $formOutPut .= '<div id="rating" class="filter-group rating" style="display: ' . (!empty($dapfforwc_options['show_rating']) ? 'block' : 'none') . ';">'; ?>
  <?php $formOutPut .= '<div class="title plugincy_collapsable_' . esc_attr($minimizable_rating) . '"><div> Rating <span class="reset-value">reset</span></div>' . ($minimizable_rating === "arrow" || $minimizable_rating === "minimize_initial"  ? '<div class="collaps"><svg class="rotatable" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"></path></svg></div>' : '') . '</div>';
-    $formOutPut .= '<div class="items rating ' . esc_attr($sub_option_rating) . '"><div> '; ?>
+    $formOutPut .= '<div class="items rating ' . (!dapfforwcpro_premium_feature() && $sub_option_rating === "dynamic-rating"  ? "rating" : esc_attr($sub_option_rating)) . '"><div> '; ?>
         <?php if ($sub_option_rating) {
             $formOutPut .=  dapfforwcpro_render_filter_option($sub_option_rating, "", "", $checked = isset($default_filter['rating[]']) ? $default_filter['rating[]'] : (isset($default_filter['rating']) ? $default_filter['rating'] : $default_filter) , $dapfforwcpro_styleoptions, "", "", "", "");
         } else {
@@ -163,7 +163,7 @@ function dapfforwcpro_filter_form($updated_filters, $default_filter, $use_anchor
         // Fetch categories
 
         // Render categories based on hierarchical mode
-        if ($hierarchical !== 'enable_separate' && !empty($updated_filters["categories"])) {
+        if (($hierarchical !== 'enable_separate' || !dapfforwcpro_premium_feature()) && !empty($updated_filters["categories"])) {
             $formOutPut .= '<div id="product-category" class="filter-group category" style="display: ' . (!empty($dapfforwc_options['show_categories']) ? 'block' : 'none') . ';">';
             $formOutPut .= '<div class="title plugincy_collapsable_' . esc_attr($minimizable) . '"><span>Category '.($singlevaluecataSelect === "yes" ? '<span class="reset-value">reset</span>':'').'</span>' . ($minimizable === 'arrow' || $minimizable === 'minimize_initial' ? '<div class="collaps"><svg class="rotatable" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"></path></svg></div>' : '') . '</div>';
             if ($sub_option === "select" || $sub_option === "select2" || $sub_option === "select2_classic") {
@@ -193,7 +193,7 @@ function dapfforwcpro_filter_form($updated_filters, $default_filter, $use_anchor
             if ($parent_categories) {
                 $formOutPut .= dapfforwcpro_render_category_hierarchy($parent_categories, $selected_categories, $sub_option, $dapfforwcpro_styleoptions, $singlevaluecataSelect, $show_count, $use_anchor, $use_filters_word, $hierarchical, $child_category);
             }
-        } elseif ($hierarchical === 'enable_separate') {
+        } elseif ($hierarchical === 'enable_separate' && dapfforwcpro_premium_feature()) {
 
             // Render parent categories in a unified section
             $parent_categories = [];
@@ -277,7 +277,7 @@ function dapfforwcpro_filter_form($updated_filters, $default_filter, $use_anchor
             }
         }
 
-        if ($hierarchical !== 'enable_separate' && !empty($updated_filters["categories"])) {
+        if (($hierarchical !== 'enable_separate' || !dapfforwcpro_premium_feature()) && !empty($updated_filters["categories"])) {
             if ($sub_option === "select" || $sub_option === "select2" || $sub_option === "select2_classic") {
                 $formOutPut .= '</select></div>';
             } else {

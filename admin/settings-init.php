@@ -29,19 +29,19 @@ function dapfforwcpro_settings_init() {
         'dapfforwc_options','dapfforwcpro_sanitize_options'
     );
     
-    add_settings_section('dapfforwcpro_section', __('Filter Settings', 'dynamic-ajax-product-filters-for-woocommerce'), null, 'dapfforwcpro-admin');
+    add_settings_section('dapfforwcpro_section', __('Filter Settings', 'dynamic-ajax-product-filters-for-woocommerce-pro'), null, 'dapfforwcpro-admin');
 
     $fields = [
-        'show_categories' => __('Show Categories', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'show_attributes' => __('Show Attributes', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'show_tags' => __('Show Tags', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'show_price_range' => __('Show Price Range', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'show_rating' => __('Show Rating', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'show_search' => __('Show Search', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'use_url_filter' => __('Use URL-Based Filter', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'update_filter_options' => __('Update filter options', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'show_loader' => __('Show Loader', 'dynamic-ajax-product-filters-for-woocommerce'),
-        'use_custom_template' => __('Use Custom Product Template', 'dynamic-ajax-product-filters-for-woocommerce'),
+        'show_categories' => __('Show Categories', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'show_attributes' => __('Show Attributes', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'show_tags' => __('Show Tags', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'show_price_range' => __('Show Price Range', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'show_rating' => __('Show Rating', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'show_search' => __('Show Search', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'use_url_filter' => __('Use URL-Based Filter', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'update_filter_options' => __('Update filter options', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'show_loader' => __('Show Loader', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
+        'use_custom_template' => __('Use Custom Product Template', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
     ];
 
     foreach ($fields as $key => $label) {
@@ -49,7 +49,7 @@ function dapfforwcpro_settings_init() {
     }
 
     // custom code template
-    add_settings_field('custom_template_code', __('product custom template code', 'dynamic-ajax-product-filters-for-woocommerce'), 'dapfforwcpro_custom_template_code_render', 'dapfforwcpro-admin', 'dapfforwcpro_section');
+    add_settings_field('custom_template_code', __('product custom template code', 'dynamic-ajax-product-filters-for-woocommerce-pro'), 'dapfforwcpro_custom_template_code_render', 'dapfforwcpro-admin', 'dapfforwcpro_section');
 
     $default_style = get_option('dapfforwc_style_options') ?: [
         'price' => ['type'=>'price', 'sub_option'=>'price','auto_price' => "on"],
@@ -65,9 +65,9 @@ function dapfforwcpro_settings_init() {
         // Add Form Style section
     add_settings_section(
         'dapfforwcpro_style_section',
-        __('Form Style Options', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('Form Style Options', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         function () {
-            echo '<p>' . esc_html__('Select the filter box style for each attribute below. Additional options will appear based on your selection.', 'dynamic-ajax-product-filters-for-woocommerce') . '</p>';
+            echo '<p>' . esc_html__('Select the filter box style for each attribute below. Additional options will appear based on your selection.', 'dynamic-ajax-product-filters-for-woocommerce-pro') . '</p>';
         },
         'dapfforwcpro-style'
     );
@@ -87,7 +87,7 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
     // Add the "Advance Settings" section
     add_settings_section(
         'dapfforwcpro_advance_settings_section',
-        __('Advance Settings', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('Advance Settings', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         null,
         'dapfforwcpro-advance-settings'
     );
@@ -95,7 +95,7 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
     // Add the "Product Selector" field
     add_settings_field(
         'product_selector',
-        __('Product Selector', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('Product Selector', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         'dapfforwcpro_product_selector_callback',
         'dapfforwcpro-advance-settings',
         'dapfforwcpro_advance_settings_section'
@@ -103,7 +103,7 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
     // Add the "Pagination Selector" field
     add_settings_field(
         'pagination_selector',
-        __('Pagination Selector', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('Pagination Selector', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         'dapfforwcpro_pagination_selector_callback',
         'dapfforwcpro-advance-settings',
         'dapfforwcpro_advance_settings_section'
@@ -111,13 +111,13 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
     // Add the "Product shotcode Selector" field
     add_settings_field(
         'product_shortcode',
-        __('Product Shortcode Selector', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('Product Shortcode Selector', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         'dapfforwcpro_product_shortcode_callback',
         'dapfforwcpro-advance-settings',
         'dapfforwcpro_advance_settings_section'
     );
 
-    add_settings_field('remove_outofStock', __('Remove out of stock product', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_remove_outofStock_render", 'dapfforwcpro-advance-settings', 'dapfforwcpro_advance_settings_section');
+    add_settings_field('remove_outofStock', __('Remove out of stock product', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_remove_outofStock_render", 'dapfforwcpro-advance-settings', 'dapfforwcpro_advance_settings_section');
 
     // seo-permalinks settings register
     $seo_permalinks_options = get_option('dapfforwc_seo_permalinks_options') ?: [
@@ -148,33 +148,33 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
 
     add_settings_section(
         'dapfforwcpro_seo_permalinks_section',
-        __('Permalinks Setup', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('Permalinks Setup', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         null,
         'dapfforwcpro-seo-permalinks'
     );
 
-    // add_settings_field('use_filters_word_in_permalinks', __('Use Filters Word in Permalinks', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_use_filters_word_in_permalinks_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
-    add_settings_field('use_attribute_type_in_permalinks', __('Use Attribute Type in Permalinks', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_use_attribute_type_in_permalinks_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
-    // add_settings_field('filters_word_in_permalinks', __('Filters Word in Permalinks', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_filters_word_in_permalinks_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
-    add_settings_field('permalinks_prefix', __('Permalinks Prefix', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_permalinks_prefix_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
+    // add_settings_field('use_filters_word_in_permalinks', __('Use Filters Word in Permalinks', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_use_filters_word_in_permalinks_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
+    add_settings_field('use_attribute_type_in_permalinks', __('Use Attribute Type in Permalinks', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_use_attribute_type_in_permalinks_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
+    // add_settings_field('filters_word_in_permalinks', __('Filters Word in Permalinks', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_filters_word_in_permalinks_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
+    add_settings_field('permalinks_prefix', __('Permalinks Prefix', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_permalinks_prefix_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_permalinks_section');
 
     // Add the "SEO Setup" section
     add_settings_section(
         'dapfforwcpro_seo_section',
-        __('SEO Setup', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('SEO Setup', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         null,
         'dapfforwcpro-seo-permalinks'
     );
 
     // add Enable SEO option
-    add_settings_field('enable_seo', __('Enable SEO', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_enable_seo_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_section');
+    add_settings_field('enable_seo', __('Enable SEO', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_enable_seo_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_section');
 
-    add_settings_field('use_anchor', __('Make filter link indexable for best SEO', 'dynamic-ajax-product-filters-for-woocommerce'), "dapfforwcpro_use_anchor_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_section');
+    add_settings_field('use_anchor', __('Make filter link indexable for best SEO', 'dynamic-ajax-product-filters-for-woocommerce-pro'), "dapfforwcpro_use_anchor_render", 'dapfforwcpro-seo-permalinks', 'dapfforwcpro_seo_section');
 
     // Add the "SEO Title" field
     add_settings_field(
         'seo_title',
-        __('SEO Title', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('SEO Title', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         'dapfforwcpro_seo_title_callback',
         'dapfforwcpro-seo-permalinks',
         'dapfforwcpro_seo_section'
@@ -183,7 +183,7 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
     
     add_settings_field(
         'seo_description',
-        __('SEO Description', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('SEO Description', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         'dapfforwcpro_seo_description_callback',
         'dapfforwcpro-seo-permalinks',
         'dapfforwcpro_seo_section'
@@ -193,7 +193,7 @@ $Advance_options = get_option('dapfforwc_advance_options') ?: [
 
     add_settings_field(
         'seo_keywords',
-        __('SEO Keywords', 'dynamic-ajax-product-filters-for-woocommerce'),
+        __('SEO Keywords', 'dynamic-ajax-product-filters-for-woocommerce-pro'),
         'dapfforwcpro_seo_keywords_callback',
         'dapfforwcpro-seo-permalinks',
         'dapfforwcpro_seo_section'
